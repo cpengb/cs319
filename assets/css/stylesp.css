@@ -1,4 +1,4 @@
-@import {{ "site.theme" }}; /* 'jekyll-theme-slate';nn*/
+@import "{{ site.theme }}";
 /*body {
   font-family: 'noto serif',serif;
 }*/
