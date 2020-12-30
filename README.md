@@ -1,2 +1,7 @@
 # cs319 Tools
-Tools for Undergraduate Computer Architecture Course. Under construction.
+## Practice Tools for Undergraduate Computer Architecture Course
+The following tools have been provided:
+- Binary Number System: convert unsigned binary to/from decimal
+- Two's Complement Representation: convert to/from decimal
+- Two's Complment Arithmetic: negation, addition, subtraction
+- IEEE 754 Floating-Point: convert to/from decimal
