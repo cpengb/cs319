@@ -1,5 +1,5 @@
 github:
-  is_project_page: false
+  is\_project\_page: false
 theme: jekyll-theme-slate
 title: Tools for Undergraduate Computer Architecture Course
 description: null
