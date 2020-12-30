@@ -1,6 +1,6 @@
 theme: jekyll-theme-slate
 github:
-  is_project_page: false
+  is\_project\_page: false
 title: Tools for Undergraduate Computer Architecture Course
 description: null
 google_analytics:
