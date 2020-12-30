@@ -2,3 +2,5 @@ theme: jekyll-theme-slate
 title: Undergraduate Computer Architecture Course
 description: null
 google_analytics:
+github:
+  is_project_page: false
