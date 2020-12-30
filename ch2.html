@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS319 Practices - Binary Number System</title>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META http-equiv="Cache-Control" content="no-cache">
+</head>
+<body>
+<h2>Binary Number System</h2>
+<p>This section practices the basics of binary to/from decimal conversions.</p>
+<h4>Practice #1. Convert Binary to Decimal</h4>
+<table>
+  <tr>
+    <td>1. Generate a random binary number: </td>
+    <td><button id="p1StartBtn" type="button" onclick="p1Random0ToN()">Start</button></td>
+    <td><p id="p1Data"></p></td>
+  </tr>
+  <tr>
+    <td>2. Please convert it to decimal:</td>
+    <td>-</td>
+    <td><input id="p1Input"></td>
+  </tr>
+  <tr>
+  <td>3. Now check your answer:</td>
+  <td><button id="p1CheckBtn" type="button" onclick="p1CheckResult()" disabled="true">Check</button></td>
+  <td><p id="p1Result">-</p></td>
+  </tr>
+  <tr>
+  <td>4. Show the sample solution:</td>
+  <td><button id="p1AnswerBtn" type="button" onclick="p1ShowAnswer()" disabled="true">Answer</button></td>
+  <td><p id="p1Answer">-</p></td>
+  </tr>
+<tr>
+</table>
+
+<h4>Practice #2. Convert Decimal to Binary - integer</h4>
+<table>
+  <tr>
+    <td>1. Generate a random decimal number: </td>
+    <td><button id="p2StartBtn" type="button" onclick="p2Random0ToN()">Start</button></td>
+    <td><p id="p2Data"></p></td>
+  </tr>
+  <tr>
+    <td>2. Please convert it to binary:</td>
+    <td>-</td>
+    <td><input id="p2Input"></td>
+  </tr>
+  <tr>
+  <td>3. Now check your answer:</td>
+  <td><button id="p2CheckBtn" type="button" onclick="p2CheckResult()" disabled="true">Check</button></td>
+  <td><p id="p2Result">-</p></td>
+  </tr>
+  <tr>
+  <td>4. Show the sample solution:</td>
+  <td><button id="p2AnswerBtn" type="button" onclick="p2ShowAnswer()" disabled="true">Answer</button></td>
+  <td><p id="p2Answer">-</p></td>
+  </tr>
+<tr>
+</table>
+
+<h4>Practice #3. Convert Decimal to Binary - fraction</h4>
+<table>
+  <tr>
+    <td>1. Generate a random decimal fraction: </td>
+    <td><button id="p3StartBtn" type="button" onclick="p3Random0ToN()">Start</button></td>
+    <td><p id="p3Data"></p></td>
+  </tr>
+  <tr>
+    <td>2. Please convert it to binary (At most 8 bits <br/>after the binary point. Drop additional bits. <br/>Do not round up.):</td>
+    <td>-</td>
+    <td><input id="p3Input"> (write it as 0.xxxx)</td>
+  </tr>
+  <tr>
+  <td>3. Now check your answer:</td>
+  <td><button id="p3CheckBtn" type="button" onclick="p3CheckResult()" disabled="true">Check</button></td>
+  <td><p id="p3Result">-</p></td>
+  </tr>
+  <tr>
+  <td>4. Show the sample solution:</td>
+  <td><button id="p3AnswerBtn" type="button" onclick="p3ShowAnswer()" disabled="true">Answer</button></td>
+  <td><p id="p3Answer">-</p></td>
+  </tr>
+<tr>
+</table>
+
+<script src = "js/ch2work.js"></script>
+
+<h2>&nbsp;</h2>
+<p>
+<b>&copy; 2018 - 2020
+Bin Peng</b><br>
+Bug reports and comments are welcome: crystal dot peng at park dot edu<br><br>
+Last Update:
+<script type="text/javascript">
+var month=new Array(12);
+month[0]="January";
+month[1]="February";
+month[2]="March";
+month[3]="April";
+month[4]="May";
+month[5]="June";
+month[6]="July";
+month[7]="August";
+month[8]="September";
+month[9]="October";
+month[10]="November";
+month[11]="December";
+
+moddate=new Date(document.lastModified); //convert to local time
+document.write(month[moddate.getMonth()]+" "+ moddate.getDate()+", "+ moddate.getFullYear());
+</script>
+
+<br>
+Created: January 17, 2018
+</p>
+</body>
+</html>
