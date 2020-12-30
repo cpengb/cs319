@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS319 Practices - Two's Complement Arithmetic</title>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META http-equiv="Cache-Control" content="no-cache">
+	<link rel="stylesheet" href="../stylesp.css">
+</head>
+<body>
+<ul class="breadcrumb">
+  <li><a href=".">Home</a></li>
+  <li>Two's Complement Arithmetic</li>
+</ul>
+
+<h2>Two's Complement Arithmetic</h2>
+
+<h4>Practice #1. 8-bit 2's Complement: Negation</h4>
+<p>Negate a 2's complement number: given a number n in 2's complement, please provide (-n)'s 2's complement representation in the same number of bits.</p>
+<table>
+  <tr>
+    <td>1. Generate a random 8-bit 2's Complement number: </td>
+    <td><button id="p1A_StartBtn" type="button" onclick="p1A_RandomN()">Start</button></td>
+    <td><p id="p1A_Data"></p></td>
+  </tr>
+  <tr>
+    <td>2. Please negate this 2's complement number <br/>and indicate whether overflow happened:</td>
+    <td>-</td>
+    <td><input id="p1A_Input"> (Enter result here)<br/>
+        <input id="p1A_Input_Overflow" type="checkbox">Overflow?</td>
+  </tr>
+  <tr>
+  <td>3. Now check your answer:</td>
+  <td><button id="p1A_CheckBtn" type="button" onclick="p1A_CheckResult()" disabled="true">Check</button></td>
+  <td><p id="p1A_Result">-</p></td>
+  </tr>
+  <tr>
+  <td>4. Show the sample solution:</td>
+  <td><button id="p1A_AnswerBtn" type="button" onclick="p1A_ShowAnswer()" disabled="true">Answer</button></td>
+  <td><p id="p1A_Answer">-</p></td>
+  </tr>
+<tr>
+</table>
+
+<h4>Practice #2. 8-bit 2's Complement: Addition</h4>
+<table>
+  <tr>
+    <td>1. Generate two random numbers in 8-bit 2's Complement: </td>
+    <td><button id="p2A_StartBtn" type="button" onclick="p2A_RandomTwoN()">Start</button></td>
+    <td><p id="p2A_Data1"></p> + <p id="p2A_Data2"></p></td>
+  </tr>
+  <tr>
+    <td>2. Please add them together and specify any carry/overflow:</td>
+    <td>-</td>
+    <td><input id="p2A_Input"> (Enter result here. Should be 8 bits)<br/>
+        <input id="p2A_Input_Carry" type="checkbox"> Carry out of MSB?<br/>
+        <input id="p2A_Input_Overflow" type="checkbox"> Overflow?</td>
+  </tr>
+  <tr>
+  <td>3. Now check your answer:</td>
+  <td><button id="p2A_CheckBtn" type="button" onclick="p2A_CheckResult()" disabled="true">Check</button></td>
+  <td><p id="p2A_Result">-</p></td>
+  </tr>
+  <tr>
+  <td>4. Show the sample solution:</td>
+  <td><button id="p2A_AnswerBtn" type="button" onclick="p2A_ShowAnswer()" disabled="true">Answer</button></td>
+  <td><p id="p2A_Answer">-</p></td>
+  </tr>
+<tr>
+</table>
+
+<h4>Practice #3. 8-bit 2's Complement: Subtraction</h4>
+<table>
+  <tr>
+    <td>1. Generate two random numbers in 8-bit 2's Complement: </td>
+    <td><button id="p3A_StartBtn" type="button" onclick="p3A_RandomTwoN()">Start</button></td>
+    <td><p id="p3A_Data1"></p> - <p id="p3A_Data2"></p></td>
+  </tr>
+  <tr>
+    <td>2. Please perform subtraction and specify any carry/overflow:</td>
+    <td>-</td>
+    <td><input id="p3A_Input"> (Enter result here. Should be 8 bits)<br/>
+        <input id="p3A_Input_Carry" type="checkbox"> Carry out of MSB?<br/>
+        <input id="p3A_Input_Overflow" type="checkbox"> Overflow?</td>
+  </tr>
+  <tr>
+  <td>3. Now check your answer:</td>
+  <td><button id="p3A_CheckBtn" type="button" onclick="p3A_CheckResult()" disabled="true">Check</button></td>
+  <td><p id="p3A_Result">-</p></td>
+  </tr>
+  <tr>
+  <td>4. Show the sample solution:</td>
+  <td><button id="p3A_AnswerBtn" type="button" onclick="p3A_ShowAnswer()" disabled="true">Answer</button></td>
+  <td><p id="p3A_Answer">-</p></td>
+  </tr>
+<tr>
+</table>
+
+<script src = "js/ch3work_2com_Arith.js"></script>
+
+
+<h2>&nbsp;</h2>
+<p>
+<b>&copy; 2018 - 2020
+Bin Peng</b><br>
+Bug reports and comments are welcome: crystal dot peng at park dot edu<br><br>
+Last Update:
+<script type="text/javascript">
+var month=new Array(12);
+month[0]="January";
+month[1]="February";
+month[2]="March";
+month[3]="April";
+month[4]="May";
+month[5]="June";
+month[6]="July";
+month[7]="August";
+month[8]="September";
+month[9]="October";
+month[10]="November";
+month[11]="December";
+
+moddate=new Date(document.lastModified); //convert to local time
+document.write(month[moddate.getMonth()]+" "+ moddate.getDate()+", "+ moddate.getFullYear());
+</script>
+
+<br>
+Created: August 24, 2020
+</p>
+</body>
+</html>
