@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  10/15/2019
-// Last updated: 12/8/2020
+// Last updated: 1/3/2021
 // Copyright reserved
 
 
@@ -198,7 +198,8 @@ function p1A_RandomN() {
 
   // reset other fields
   document.getElementById("p1A_Input").value = ""; // user input
-  document.getElementById("p1A_Input_Overflow").checked = false; // user checkbox input
+  document.getElementById("p1A_Input_Overflow_Y").checked = false; // radio button input
+  document.getElementById("p1A_Input_Overflow_N").checked = false;
   document.getElementById("p1A_Result").innerHTML = "-";
   document.getElementById("p1A_Answer").innerHTML = "-";
   document.getElementById("p1A_CheckBtn").disabled = false; // turn on Check button
@@ -210,6 +211,8 @@ function p1A_RandomN() {
 function p1A_CheckResult() {
   // Get the value of the input field
   var x = document.getElementById("p1A_Input").value.trim();
+  var overflowInput = document.getElementsByName("p1A_Input_Overflow");
+  // overflowInput[0].checked  overflowInput[1].checked
 
   var text =""; // result to display
 
@@ -220,6 +223,8 @@ function p1A_CheckResult() {
 
   if (x.length == 0) {
 	text = "Please provide a response.";
+  } else if (!overflowInput[0].checked && !overflowInput[1].checked) {
+	text = "Please specify whether overflow happened.";
   } else if (isNaN(digit)) {
     text = "Incorrect - not a Two's Complement number. Try again.";
   } else if (x.length != SIZE) {
@@ -233,10 +238,10 @@ function p1A_CheckResult() {
 	  isOverflow = true; // overflow happens in negate when the sign bit [0]
 	                         // remains same
 	}
-    var overflowInput = document.getElementById("p1A_Input_Overflow").checked;
 
 	if (x == bStr2ComNeg) {
-      if (overflowInput == isOverflow) {
+      if (isOverflow && overflowInput[0].checked ||
+        !isOverflow && overflowInput[1].checked) {
 	    text = "Correct!";
 	  }
 	  else { // wrong overflow input
@@ -299,8 +304,10 @@ function p2A_RandomTwoN() {
 
   // reset other fields
   document.getElementById("p2A_Input").value = ""; // user input
-  document.getElementById("p2A_Input_Carry").checked = false; // user carry out of MSB input
-  document.getElementById("p2A_Input_Overflow").checked = false; // user overflow input
+  document.getElementById("p2A_Input_Overflow_Y").checked = false; // user overflow input
+  document.getElementById("p2A_Input_Overflow_N").checked = false; // user overflow input
+  document.getElementById("p2A_Input_Carry_Y").checked = false; // user carry out of MSB input
+  document.getElementById("p2A_Input_Carry_N").checked = false; // user carry out of MSB input
   document.getElementById("p2A_Result").innerHTML = "-";
   document.getElementById("p2A_Answer").innerHTML = "-";
   document.getElementById("p2A_CheckBtn").disabled = false; // turn on Check button
@@ -312,6 +319,10 @@ function p2A_RandomTwoN() {
 function p2A_CheckResult() {
   // Get the value of the input field
   var x = document.getElementById("p2A_Input").value.trim();
+  var overflowInput = document.getElementsByName("p2A_Input_Overflow");
+    // overflowInput[0].checked  overflowInput[1].checked
+  var carryInput = document.getElementsByName("p2A_Input_Carry");
+    // carryInput[0].checked  carryInput[1].checked
 
   var text =""; // result to display
 
@@ -322,6 +333,10 @@ function p2A_CheckResult() {
 
   if (x.length == 0) {
 	text = "Please provide a response.";
+  } else if (!overflowInput[0].checked && !overflowInput[1].checked) {
+	text = "Please specify whether overflow happened.";
+  } else if (!carryInput[0].checked && !carryInput[1].checked) {
+	text = "Please specify whether there was a carry out of the MSB.";
   } else if (isNaN(digit)) {
     text = "Incorrect - not a Two's Complement number. Try again.";
   } else if (x.length != SIZE) {
@@ -336,25 +351,28 @@ function p2A_CheckResult() {
 
     var isCarryOut = (carryBit == '1'); // carry out of MSB?
     var isOverflow = false; // assume no overflow
-
 	if ( bStr2Com1.charAt(0) == bStr2Com2.charAt(0) && bStr2Com1.charAt(0) != bStrAddResult.charAt(0) ) {
 	  isOverflow = true; // overflow happens in addition when operands have same sign [0]
 	                         // but result has a different sign
 	}
 
-    var carryInput = document.getElementById("p2A_Input_Carry").checked;
-    var overflowInput = document.getElementById("p2A_Input_Overflow").checked;
+    var isCarryResultCorrect = isCarryOut && carryInput[0].checked ||
+      !isCarryOut && carryInput[1].checked;
+    var isOverflowResultCorrect = isOverflow && overflowInput[0].checked ||
+      !isOverflow && overflowInput[1].checked;
 
 	if (x == bStrAddResult) {
-      if (overflowInput == isOverflow && carryInput == isCarryOut) {
+	  // if overflow, it's okay to just check overflow result
+      if (isOverflow && isOverflowResultCorrect ||
+        isCarryResultCorrect && isOverflowResultCorrect) {
 	    text = "Correct!";
 	  }
 	  else { // wrong overflow/carry input
 	    text = "Correct addition result, but ";
-	    if (overflowInput != isOverflow) {
+	    if (!isOverflowResultCorrect) {
 	      text += "incorrect overflow result.";
 	    }
-	    if (carryInput != isCarryOut) {
+	    if (!isCarryResultCorrect) {
 		  text += "incorrect carry-out-of-MSB result.";
 	    }
 	  }
@@ -439,8 +457,10 @@ function p3A_RandomTwoN() {
 
   // reset other fields
   document.getElementById("p3A_Input").value = ""; // user input
-  document.getElementById("p3A_Input_Carry").checked = false; // user carry out of MSB input
-  document.getElementById("p3A_Input_Overflow").checked = false; // user overflow input
+  document.getElementById("p3A_Input_Overflow_Y").checked = false; // user overflow input
+  document.getElementById("p3A_Input_Overflow_N").checked = false; // user overflow input
+  document.getElementById("p3A_Input_Carry_Y").checked = false; // user carry out of MSB input
+  document.getElementById("p3A_Input_Carry_N").checked = false; // user carry out of MSB input
   document.getElementById("p3A_Result").innerHTML = "-";
   document.getElementById("p3A_Answer").innerHTML = "-";
   document.getElementById("p3A_CheckBtn").disabled = false; // turn on Check button
@@ -452,8 +472,12 @@ function p3A_RandomTwoN() {
 function p3A_CheckResult() {
   // Get the value of the input field
   var x = document.getElementById("p3A_Input").value.trim();
+  var overflowInput = document.getElementsByName("p3A_Input_Overflow");
+    // overflowInput[0].checked  overflowInput[1].checked
+  var carryInput = document.getElementsByName("p3A_Input_Carry");
+    // carryInput[0].checked  carryInput[1].checked
 
-  var text ="test"; // result to display
+  var text =""; // result to display
 
   // The purpose is to decide if the student answer is a valid binary number
   // if not, will get a NaN
@@ -462,7 +486,11 @@ function p3A_CheckResult() {
 
   if (x.length == 0) {
 	text = "Please provide a response.";
-  } else if (isNaN(digit)) {
+  } else if (!overflowInput[0].checked && !overflowInput[1].checked) {
+	text = "Please specify whether overflow happened.";
+  } else if (!carryInput[0].checked && !carryInput[1].checked) {
+	text = "Please specify whether there was a carry out of the MSB.";
+  }else if (isNaN(digit)) {
     text = "Incorrect - not a Two's Complement number. Try again.";
   } else if (x.length != SIZE) {
     text = "Incorrect - not " + (+SIZE).toString() + " bits. Try again.";
@@ -476,17 +504,23 @@ function p3A_CheckResult() {
 
     var isCarryOut = (carryBit == '1'); // carry out of MSB?
     var isOverflow = false; // assume no overflow
-
 	if ( bStr2Com1.charAt(0) != bStr2Com2.charAt(0) && bStr2Com1.charAt(0) != bStrSubResult.charAt(0) ) {
 	  isOverflow = true; // overflow happens in subtraction when operands have different signs [0]
 	                     // and result has a different sign from n1, minuend
 	}
 
-    var carryInput = document.getElementById("p3A_Input_Carry").checked;
-    var overflowInput = document.getElementById("p3A_Input_Overflow").checked;
+    //var carryInput = document.getElementById("p3A_Input_Carry").checked;
+    //var overflowInput = document.getElementById("p3A_Input_Overflow").checked;
+
+    var isCarryResultCorrect = isCarryOut && carryInput[0].checked ||
+      !isCarryOut && carryInput[1].checked;
+    var isOverflowResultCorrect = isOverflow && overflowInput[0].checked ||
+      !isOverflow && overflowInput[1].checked;
 
 	if (x == bStrSubResult) {
-      if (overflowInput == isOverflow && carryInput == isCarryOut) {
+	  // if overflow, it's okay to just check overflow result
+      if (isOverflow && isOverflowResultCorrect ||
+        isCarryResultCorrect && isOverflowResultCorrect) {
 	    text = "Correct!";
 	  }
 	  else { // wrong overflow/carry input
