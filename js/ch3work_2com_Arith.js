@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  10/15/2019
-// Last updated: 1/3/2021
+// Last updated: 1/4/2021
 // Copyright reserved
 
 
@@ -422,13 +422,15 @@ function p2A_ShowAnswer() {
         " ? " + twoComToDec(bStrAddResult, SIZE) + " )";
   } else { //no overflow
     if ( bStr2Com1.charAt(0) == bStr2Com2.charAt(0) ) { // result same sign as operands
-	  stepsStr += "<br> -> (Addition) No overflow, as the result has the same sign as the operands.";
+      stepsStr += "<br> -> (Addition) No overflow, as the result has the same sign as the operands.";
     } else { // different sign operands
       stepsStr += "<br> -> (Addition) No overflow, as the operands have different signs.";
     }
 
     if (isCarryOut) {
-	  stepsStr += "<br>There is a carry out of MSB, just drop it.";
+      stepsStr += "<br>There is a carry out of MSB, just drop it.";
+    } else {
+      stepsStr += "<br>No carry out of MSB.";
     }
     stepsStr += "<br>The result is: " + bStrAddResult + " ( " +
         twoComToDec(bStr2Com1, SIZE) + " + " + twoComToDec(bStr2Com2, SIZE) +
@@ -504,36 +506,32 @@ function p3A_CheckResult() {
 
     var isCarryOut = (carryBit == '1'); // carry out of MSB?
     var isOverflow = false; // assume no overflow
-	if ( bStr2Com1.charAt(0) != bStr2Com2.charAt(0) && bStr2Com1.charAt(0) != bStrSubResult.charAt(0) ) {
-	  isOverflow = true; // overflow happens in subtraction when operands have different signs [0]
-	                     // and result has a different sign from n1, minuend
-	}
-
-    //var carryInput = document.getElementById("p3A_Input_Carry").checked;
-    //var overflowInput = document.getElementById("p3A_Input_Overflow").checked;
+    if ( bStr2Com1.charAt(0) != bStr2Com2.charAt(0) && bStr2Com1.charAt(0) != bStrSubResult.charAt(0) ) {
+      isOverflow = true; // overflow happens in subtraction when operands have different signs [0]
+	                 // and result has a different sign from n1, minuend
+    }
 
     var isCarryResultCorrect = isCarryOut && carryInput[0].checked ||
       !isCarryOut && carryInput[1].checked;
     var isOverflowResultCorrect = isOverflow && overflowInput[0].checked ||
       !isOverflow && overflowInput[1].checked;
 
-	if (x == bStrSubResult) {
-	  // if overflow, it's okay to just check overflow result
+    if (x == bStrSubResult) {
+      // if overflow, it's okay to just check overflow result
       if (isOverflow && isOverflowResultCorrect ||
         isCarryResultCorrect && isOverflowResultCorrect) {
-	    text = "Correct!";
+	  text = "Correct!";
+	} else { // wrong overflow/carry input
+	  text = "Correct subtraction result, but ";
+	  if (overflowInput != isOverflow) {
+	    text += "incorrect overflow result.";
 	  }
-	  else { // wrong overflow/carry input
-	    text = "Correct subtraction result, but ";
-	    if (overflowInput != isOverflow) {
-	      text += "incorrect overflow result.";
-	    }
-	    if (carryInput != isCarryOut) {
-		  text += "incorrect carry-out-of-MSB result.";
-	    }
+	  if (carryInput != isCarryOut) {
+	    text += "incorrect carry-out-of-MSB result.";
 	  }
+	}
     } else {
-	  text = "Incorrect subtraction result. Try again.";
+      text = "Incorrect subtraction result. Try again.";
     }
 
   } // end else
@@ -582,13 +580,15 @@ function p3A_ShowAnswer() {
         " ? " + twoComToDec(bStrSubResult, SIZE) + " )";
   } else { //no overflow
     if ( bStr2Com1.charAt(0) != bStr2Com2.charAt(0) ) { // result same sign as 1st operand, minuend
-	  stepsStr += "<br> -> (Subtraction) No overflow, as [the operands of subtraction have different signs <br>(operands of addition have the same sign),] the result has the same sign as <br>the first operand.";
+      stepsStr += "<br> -> (Subtraction) No overflow, as [the operands of subtraction have different signs <br>(operands of addition have the same sign),] the result has the same sign as <br>the first operand.";
     } else { // subtraction operands have same sign (addition operands have different signs)
       stepsStr += "<br> -> (Subtraction) No overflow, as the operands of subtraction have the same sign <br>(operands of addition have different signs).";
     }
 
     if (isCarryOut) {
-	  stepsStr += "<br><br>There is a carry out of MSB, just drop it.";
+      stepsStr += "<br>There is a carry out of MSB, just drop it.";
+    } else {
+      stepsStr += "<br>No carry out of MSB.";
     }
     stepsStr += "<br> -> The result is: " + bStrSubResult + " ( " +
         twoComToDec(bStr2Com1, SIZE) + " - " + twoComToDec(bStr2Com2, SIZE) +
