@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 12/8/2020
+// Last updated: 1/16/2021
 // Copyright reserved
 
 //==================================
@@ -309,7 +309,7 @@ function p2ShowAnswer() {
   } else if (n>0) { // positive
 	stepsStr = " Positive<br> -> 2's complement is same as unsigned binary int<br> ->" + stepsStr;
   } else { // negative
-	stepsStr = " Negative: find 2's complement of its absolute value and then negate<br> -> (-n)'s 2's complement<br> ->" + stepsStr;
+	stepsStr = " Negative: find 2's complement of its absolute value then negate<br> -> (-n)'s 2's complement<br> ->" + stepsStr;
 	stepsStr += "<br> -> Next negate this 2's complement number: " + bStr;
 	stepsStr += "<br> -> -> Flip each bit: " + get1Com(bStr, SIZE);
 	stepsStr += "<br> -> -> Add 1:         " + bStr2Com;
