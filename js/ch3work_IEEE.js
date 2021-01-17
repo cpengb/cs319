@@ -3,7 +3,7 @@
 //
 // Author: Bin Peng
 // Created:  8/27/2019
-// Last updated: 12/8/2020
+// Last updated: 1/17/2021
 // Copyright reserved
 
 //==================================
@@ -219,18 +219,24 @@ function p1RandomN() {
 //==================================
 
 function p1CheckResult() {
-  // hard to check user work. Just show answer
-
-  // Get the question
-  var ieeeStrDisplay = document.getElementById("p1Data").innerHTML; // given IEEE 754 as string with spaces
-  var ieeeStr = ieeeStrDisplay.substr(0, 8) +
+  // Get the value of the input field
+  var x = document.getElementById("p1Input").value.trim();
+  var text =""; // result to display
+	
+  if (x.length == 0)
+    text = "Please provide a response.";
+  else { // otherwise hard to check user work. Just show answer
+    // Get the question
+    var ieeeStrDisplay = document.getElementById("p1Data").innerHTML; // given IEEE 754 as string with spaces
+    var ieeeStr = ieeeStrDisplay.substr(0, 8) +
                 ieeeStrDisplay.substr(9, 8) +
                 ieeeStrDisplay.substr(18, 8) +
                 ieeeStrDisplay.substr(27); // take out spaces between 8-bit sets
 
-  var nStr = ieeeStrToDecStr(ieeeStr, SIZE);  // result as String
-  var text ="Answer shoud be: " + nStr + " or equivalent."; // result to display
-
+    var nStr = ieeeStrToDecStr(ieeeStr, SIZE);  // result as String
+    text ="Answer should be: " + nStr + " or equivalent."; // result to display
+  }
+	
   document.getElementById("p1Result").innerHTML = text;
   document.getElementById("p1AnswerBtn").disabled = false; // turn on Answer button
 } // end p1CheckResult
