@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 12/6/2020
+// Last updated: 7/19/2021
 // Copyright reserved
 
 //==================================
@@ -71,7 +71,7 @@ function p1ShowAnswer() {
     }
   }
 
-  document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + " = " + steps + "<br> (the right most column i.e. LSB is column 0 with weight 2<sup>0</sup>)<br>";
+  document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + " = " + steps + "<br> (The least significant bit/LSB is column 0 with weight 2<sup>0</sup>)<br>";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
