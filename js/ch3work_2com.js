@@ -216,7 +216,7 @@ function p1ShowAnswer() {
 
   document.getElementById("p1Answer").innerHTML = "Answer: " + n + "<br><pre>Given " +
                                bStr2Com + "<br> ->" + stepsStr +
-                               "<br> (the right most column i.e. LSB is column 0 with weight 2<sup>0</sup>)</pre>";
+                               "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)</pre>";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
@@ -298,7 +298,7 @@ function p2ShowAnswer() {
     }
     bStr = fillTo(bStr, "0", SIZE); // absolute value's binary in SIZE # of bits
     stepsStr += "<br> -> " +  bStr +
-                    " (the first rem is LSB, the column with weight 2<sup>0</sup>. <br>" +
+                    " (The first remainder is least significant bit/LSB. <br>" +
   					"Add additional leading 0s to make " + (+SIZE).toString() + " bits. )";
   }
 
