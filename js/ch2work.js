@@ -71,7 +71,7 @@ function p1ShowAnswer() {
     }
   }
 
-  document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + " = " + steps + "<br> (The least significant bit/LSB is column 0 with weight 2<sup>0</sup>)<br>";
+  document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + " = " + steps + "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)<br>";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
