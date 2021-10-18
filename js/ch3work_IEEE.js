@@ -3,7 +3,7 @@
 //
 // Author: Bin Peng
 // Created:  8/27/2019
-// Last updated: 1/17/2021
+// Last updated: 10/18/2021
 // Copyright reserved
 
 //==================================
@@ -57,15 +57,15 @@ var f_index = 0;
 function fillTo(str, fillerStr, n) {
   var resultStr = "";
   if (str.length < n) { // too few, need to add
-	resultStr = str;
-	var i;
-	for (i=str.length; i<n; i++) {
+    resultStr = str;
+    var i;
+    for (i=str.length; i<n; i++) {
       resultStr = fillerStr + resultStr;
-	}
+    }
   } else if (str.length > n) { // too many, need to chop
-	resultStr = str.substr(str.length-n, n);
+    resultStr = str.substr(str.length-n, n);
   } else {
-	resultStr = str;
+    resultStr = str;
   }
   return resultStr;
 } // end function fillTo
@@ -133,35 +133,38 @@ function decToIEEE(num, n) {
 
   // sign
   if (num < 0) { // negative
-	ieeeStr = "1 ";
-	num = -num;
+	  ieeeStr = "1 ";
+	  num = -num;
   } else {
-	ieeeStr = "0 ";
+	  ieeeStr = "0 ";
   }
 
+  // num is now positive (also no zero)
   var bStr = (+num).toString(2); // raw binary
 
-  // find binary point -> decide real exp and significant portion bits
+  // find binary point -> decide real exp and significand portion bits
   realExp = 0; // global var: true exp value
   var indexOfPoint = bStr.indexOf(".");
-  var fStr = "";
+  var fStr = ""; 
 
-  if (indexOfPoint >=0 ) { // with a binary point
-    if (indexOfPoint == 1 && bStr.charAt(0)=="1" || indexOfPoint > 1) { // non-zero int
+  if (indexOfPoint >= 0) { // w a binary point
+    if (indexOfPoint == 1 && bStr.charAt(0)=="1" || indexOfPoint > 1) {// w a non-zero int part: xxx.xx
       realExp = indexOfPoint - 1;
-      if (indexOfPoint == 1) // 1.xxx
-        fStr = bStr.substr(indexOfPoint+1); // just fraction
-      else
-        fStr = bStr.substring(1, indexOfPoint-1) + bStr.substr(indexOfPoint+1); // after 1st one in int, including fraction bits
-      // if indexOfPoint is 1 i.e. 1.xxx, first substring call
-    } else { // int part is zero, a fraction smaller than 1
-      var indexOfFirstOne = bStr.indexOf("1"); // must have such a one
+      if (indexOfPoint == 0) { // 1.xxx
+        fStr = bStr.substr(indexOfPoint + 1); // fraction: after .
+      } else { // xxx.xx
+        fStr = bStr.substring(1, indexOfPoint) + bStr.substr(indexOfPoint + 1);
+            // substring: [start, end). not include the ending index
+            // after 1st one in int part till before . + fraction (after .) 
+      }
+    } else { // 0.xxx: int part zero i.e. just a fraction value
+      var indexOfFirstOne = bStr.indexOf("1"); // first non-zero digit
       realExp = -(indexOfFirstOne - 1);
       fStr = bStr.substr(indexOfFirstOne + 1); // after 1st one in fraction
-	}
+    }
   } else { // all int bits
     realExp = bStr.length - 1;
-    fStr = bStr.substr(1); // after 1st bit
+    fStr = bStr.substr(1);
   }
 
   // biased exponent
@@ -374,24 +377,23 @@ function p2CheckResult() {
   var text =""; // result to display
 
   // The purpose is to decide if the student answer is a valid IEEE 754 number
-  // i.e. if 32 bits
-  var regex=/[0|1]{32}/ // student answer
+  var regex=/[0|1]{32}/; // 32 bits?
 
   if (x1.length==0 || x2.length==0 || x3.length==0)
     text = "At least one response field is empty";
   else if (!regex.test(x))
     text = "Incorrect - not 32 bits.";
   else {
-	x = x1 + " " + x2 + " " + x3; // now with space between sections
+    x = x1 + " " + x2 + " " + x3; // now with space between sections
 
-	var nStr = document.getElementById("p2Data").innerHTML; // given num as string
+    var nStr = document.getElementById("p2Data").innerHTML; // given num as string
     var n = parseFloat(nStr);
 
     // check for +0 or -0
     if (n == 0 && (x == POS_ZERO_IEEE_STR || x == NEG_ZERO_IEEE_STR) )
       text = "Correct! Special value for 0";
     else if (n>0 && x1 =="1" || n<0 && x1=="0") // check sign
-	  text = "Incorrect sign bit. No further checking";
+      text = "Incorrect sign bit. No further checking";
     else {
       // now check values
       var resultStr = decToIEEE(n, SIZE);
@@ -420,7 +422,7 @@ function p2ShowAnswer() {
   if (n==0) {
     stepsStr = "Special value for 0 (or: " + NEG_ZERO_IEEE_STR + ")";
     document.getElementById("p2Answer").innerHTML = "Answer: " + resultStr + "<br><pre>Given " + nStr + "<br>->" + stepsStr + "</pre>";
-	document.getElementById("p2AnswerBtn").disabled = true; // turn off Answer button
+    document.getElementById("p2AnswerBtn").disabled = true; // turn off Answer button
     return;
   }
 
@@ -429,9 +431,9 @@ function p2ShowAnswer() {
 
   // sign
   if (n > 0) // positive
-	stepsStr = " positive: sign bit 0";
+    stepsStr = " positive: sign bit 0";
   else
-	stepsStr = " negative: sign bit 1";
+    stepsStr = " negative: sign bit 1";
 
   // int
   var absN = Math.abs(n);
@@ -441,7 +443,7 @@ function p2ShowAnswer() {
   // f
   var fBStr = "";
   if (absN - intAbsN > 0) // w fraction
-	fBStr = f_binStrArr[f_index];
+    fBStr = f_binStrArr[f_index];
 
   stepsStr += "<br/>-> " + Math.abs(n) + " to unsigned binary: " + intBStr + fBStr;
 
@@ -457,6 +459,7 @@ function p2ShowAnswer() {
   }
   if (newFBStr.length==0) // nothing i.e. 1.
     newFBStr = "0";
+  
   stepsStr += "1." + newFBStr;
   stepsStr += " x 2<sup>" + realExp + "</sup>";
 
