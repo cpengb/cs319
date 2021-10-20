@@ -60,7 +60,7 @@ function p1ShowAnswer() {
   var nStr = parseInt(bStr, 2); // result
 
   var n = 0; // result
-  var steps1 = "Those bit positions have 1s: ";
+  var steps1 = "those bit positions have 1s: ";
   var steps2 = "";
   var i = 0; // loop variables
 
@@ -77,7 +77,7 @@ function p1ShowAnswer() {
   }
 
   document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + 
-      "<br>" + steps1 + 
+      "<br>Given " + bStr + ", <br>" + steps1 + 
       "<br>(The rightmost bit/least significant bit/LSB is at position 0)<br>" + 
       " -> the value is " + steps2 + 
       "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)";
@@ -213,7 +213,8 @@ function p3ShowAnswer() {
   var nStr = document.getElementById("p3Data").innerHTML;
   var bStr = (+nStr).toString(2); // binary
   if (bStr.length > 10)
-    bStr = bStr.substr(0, 10); // chop off extra bits beyond 8
+    bStr = bStr.substr(0, 10); // chop off extra bits beyond 8 binary digits
+                               // 10 chars: 0. + 8 digits after .
 
   var n = nStr;
 
