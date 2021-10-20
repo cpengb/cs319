@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  10/15/2019
-// Last updated: 1/4/2021
+// Last updated: 10/20/2021
 // Copyright reserved
 
 
@@ -23,15 +23,15 @@ var SIZE = 8;  // global var
 function fillTo(str, fillerStr, n) {
   var resultStr = "";
   if (str.length < n) { // too few, need to add
-	resultStr = str;
-	var i;
-	for (i=str.length; i<n; i++) {
+	  resultStr = str;
+	  var i;
+	  for (i=str.length; i<n; i++) {
       resultStr = fillerStr + resultStr;
-	}
+	  }
   } else if (str.length > n) { // too many, need to chop
-	resultStr = str.substr(str.length-n, n);
+	  resultStr = str.substr(str.length-n, n);
   } else {
-	resultStr = str;
+	  resultStr = str;
   }
   return resultStr;
 } // end function fillTo
@@ -43,27 +43,27 @@ function decTo2Com(num, n) {
   var bStr2Com = "";  // 2's complement
 
   if (num >= 0) {
-	bStr2Com = (+num).toString(2); // binary. [0] is MSB, [str.length-1] is LSB
+	  bStr2Com = (+num).toString(2); // binary. [0] is MSB, [str.length-1] is LSB
     bStr2Com = fillTo(bStr2Com, "0", n);  // fill to 8 bits with leading 0s
   } else { // negative
-	var tmp = (-num).toString(2); // -n's binary. [0] is MSB, [str.length-1] is LSB
-	tmp = fillTo(tmp, "0", n); // fill to 8 bits with leading 0s
+	  var tmp = (-num).toString(2); // -n's binary. [0] is MSB, [str.length-1] is LSB
+	  tmp = fillTo(tmp, "0", n); // fill to 8 bits with leading 0s
 
-	// flip to get 1's complement
-	var i;
-	var bStr1Com = "";  // 1's complement
-	for (i=0; i<tmp.length; i++) {
-	  if (tmp.charAt(i)=='0') {
-		bStr1Com += "1";
-	  } else {
-		bStr1Com += "0";
+	  // flip to get 1's complement
+	  var i;
+	  var bStr1Com = "";  // 1's complement
+	  for (i=0; i<tmp.length; i++) {
+	    if (tmp.charAt(i)=='0') {
+		    bStr1Com += "1";
+	    } else {
+		    bStr1Com += "0";
+	    }
 	  }
-	}
 
-	// add 1. pretend bStr1Com is a unsigned binary
-	var n1Com = parseInt(bStr1Com, 2);  // 1's complement as an unsigned int value
-	n1Com = n1Com + 1;
-	tmp = n1Com.toString(2);
+	  // add 1. pretend bStr1Com is a unsigned binary
+	  var n1Com = parseInt(bStr1Com, 2);  // 1's complement as an unsigned int value
+	  n1Com = n1Com + 1;
+	  tmp = n1Com.toString(2);
 
     bStr2Com = fillTo(tmp, "1", n);  // maybe longer than n bits
   }
@@ -78,11 +78,11 @@ function twoComToDec(str, n) {
   // if positive
   var num = 0;
   if (str.charAt(0) == '0') { // positive
-	num = parseInt(str, 2);
+	  num = parseInt(str, 2);
   } else { // negative
-	var tmp = negate(str, n); // find (-n)'s 2's complement.
-	num = parseInt(tmp, 2);  // -n, a positive value
-	num = -num;
+	  var tmp = negate(str, n); // find (-n)'s 2's complement.
+	  num = parseInt(tmp, 2);  // -n, a positive value
+	  num = -num;
   }
 
   return num;
@@ -98,10 +98,10 @@ function get1Com(str, n) {
   var bStr1Com = "";  // 1's complement
   for (i=0; i<str.length && i<n; i++) { // [0] is MSB
     if (str.charAt(i)=='0') {
-	  bStr1Com += "1";
-	} else {
-	  bStr1Com += "0";
-	}
+	    bStr1Com += "1";
+	  } else {
+	    bStr1Com += "0";
+	  }
   }
 
   return bStr1Com;
@@ -135,23 +135,23 @@ function addTwoCompl(str1, str2, n) {
   var bStr2ComResult = "";
   var carry = 0;
   for (i=n-1; i>=0 && i<str1.length && i<str1.length; i--) { // [0] is MSB, [n-1] is LSB
-	var c1 = str1.charAt(i) - '0';
-	var c2 = str2.charAt(i) - '0';
+	  var c1 = str1.charAt(i) - '0';
+	  var c2 = str2.charAt(i) - '0';
 
-	// c1 + c2 + carry
-	var r = c1 + c2 + carry;
-	if (r > 1) {
-	  r -= 2;
-	  carry = 1;
-	} else {
-	  carry = 0;
-	}
+	  // c1 + c2 + carry
+	  var r = c1 + c2 + carry;
+	  if (r > 1) {
+	    r -= 2;
+	    carry = 1;
+	  } else {
+	    carry = 0;
+	  }
 
     if (r==0) {
-	  bStr2ComResult = "0" + bStr2ComResult;
-	} else {
-	  bStr2ComResult = "1" + bStr2ComResult;
-	}
+	    bStr2ComResult = "0" + bStr2ComResult;
+	  } else {
+	    bStr2ComResult = "1" + bStr2ComResult;
+    }
   } // end loop
 
   if (carry==0) {
@@ -222,33 +222,33 @@ function p1A_CheckResult() {
   var digit = parseInt(x, 2); // student answer
 
   if (x.length == 0) {
-	text = "Please provide a response.";
+	  text = "Please provide a response.";
   } else if (!overflowInput[0].checked && !overflowInput[1].checked) {
-	text = "Please specify whether overflow happened.";
+	  text = "Please specify whether overflow happened.";
   } else if (isNaN(digit)) {
     text = "Incorrect - not a Two's Complement number. Try again.";
   } else if (x.length != SIZE) {
     text = "Incorrect - not " + (+SIZE).toString() + " bits. Try again.";
   } else {
-	var bStr2Com = document.getElementById("p1A_Data").innerHTML; // given 2's complement as string
+	  var bStr2Com = document.getElementById("p1A_Data").innerHTML; // given 2's complement as string
     var bStr2ComNeg = negate(bStr2Com, SIZE); // the expected result after negation
 
-	var isOverflow = false; // mostly no overflow
-	if ( bStr2Com.charAt(0) == bStr2ComNeg.charAt(0) ) {
-	  isOverflow = true; // overflow happens in negate when the sign bit [0]
+	  var isOverflow = false; // mostly no overflow
+	  if ( bStr2Com.charAt(0) == bStr2ComNeg.charAt(0) ) {
+	    isOverflow = true; // overflow happens in negate when the sign bit [0]
 	                         // remains same
-	}
+	  }
 
-	if (x == bStr2ComNeg) {
+	  if (x == bStr2ComNeg) {
       if (isOverflow && overflowInput[0].checked ||
-        !isOverflow && overflowInput[1].checked) {
-	    text = "Correct!";
-	  }
-	  else { // wrong overflow input
-	    text = "Correct negatation, but incorrect overflow result.";
-	  }
+          !isOverflow && overflowInput[1].checked) {
+	      text = "Correct!";
+	    }
+	    else { // wrong overflow input
+	      text = "Correct negatation, but incorrect overflow result.";
+	    }
     } else {
-	  text = "Incorrect negation. Try again.";
+	    text = "Incorrect negation. Try again.";
     }
 
   } // else
@@ -277,9 +277,9 @@ function p1A_ShowAnswer() {
     stepsStr += "<br><br> -> (Negation) Overflow happened, as the expected result has the same sign as the given number.";
     stepsStr += "<br> -> The result " + bStr2ComNeg + " is invalid. Should not be used." ;
   } else {
-	stepsStr += "<br><br> -> (Negation) There is no overflow, as the expected result and the given number have different signs.";
-    stepsStr += "<br> -> The result is: " + bStr2ComNeg + " ( negate "
-      + twoComToDec(bStr2Com, SIZE) + " -> " + twoComToDec(bStr2ComNeg, SIZE) + " )";
+	  stepsStr += "<br><br> -> (Negation) There is no overflow, as the expected result and the given number have different signs.";
+    stepsStr += "<br> -> The result is: " + bStr2ComNeg + " ( negate " +
+      twoComToDec(bStr2Com, SIZE) + " -> " + twoComToDec(bStr2ComNeg, SIZE) + " )";
   }
   document.getElementById("p1A_Answer").innerHTML = "Answer: " + "<br><pre>Given " +
                                bStr2Com + "<br> ->" + stepsStr + "</pre>";
@@ -332,18 +332,18 @@ function p2A_CheckResult() {
   var digit = parseInt(x, 2); // student answer
 
   if (x.length == 0) {
-	text = "Please provide a response.";
+	  text = "Please provide a response.";
   } else if (!overflowInput[0].checked && !overflowInput[1].checked) {
-	text = "Please specify whether overflow happened.";
+	  text = "Please specify whether overflow happened.";
   } else if (!carryInput[0].checked && !carryInput[1].checked) {
-	text = "Please specify whether there was a carry out of the MSB.";
+	  text = "Please specify whether there was a carry out of the MSB.";
   } else if (isNaN(digit)) {
     text = "Incorrect - not a Two's Complement number. Try again.";
   } else if (x.length != SIZE) {
     text = "Incorrect - not " + (+SIZE).toString() + " bits. Try again.";
   } else {
-	var bStr2Com1 = document.getElementById("p2A_Data1").innerHTML; // given n1, 2's complement as string
-	var bStr2Com2 = document.getElementById("p2A_Data2").innerHTML; // given n2, 2's complement as string
+	  var bStr2Com1 = document.getElementById("p2A_Data1").innerHTML; // given n1, 2's complement as string
+	  var bStr2Com2 = document.getElementById("p2A_Data2").innerHTML; // given n2, 2's complement as string
 
     var bStrAddResultRaw = addTwoCompl(bStr2Com1, bStr2Com2, SIZE); // raw addition result
     var bStrAddResult = bStrAddResultRaw.substr(1, SIZE);
@@ -351,33 +351,33 @@ function p2A_CheckResult() {
 
     var isCarryOut = (carryBit == '1'); // carry out of MSB?
     var isOverflow = false; // assume no overflow
-	if ( bStr2Com1.charAt(0) == bStr2Com2.charAt(0) && bStr2Com1.charAt(0) != bStrAddResult.charAt(0) ) {
-	  isOverflow = true; // overflow happens in addition when operands have same sign [0]
-	                         // but result has a different sign
-	}
+	  if ( bStr2Com1.charAt(0) == bStr2Com2.charAt(0) && bStr2Com1.charAt(0) != bStrAddResult.charAt(0) ) {
+	    isOverflow = true; // overflow happens in addition when operands have same sign [0]
+	                     // but result has a different sign
+	  }
 
     var isCarryResultCorrect = isCarryOut && carryInput[0].checked ||
       !isCarryOut && carryInput[1].checked;
     var isOverflowResultCorrect = isOverflow && overflowInput[0].checked ||
       !isOverflow && overflowInput[1].checked;
 
-	if (x == bStrAddResult) {
-	  // if overflow, it's okay to just check overflow result
+  	if (x == bStrAddResult) {
+	    // if overflow, it's okay to just check overflow result
       if (isOverflow && isOverflowResultCorrect ||
-        isCarryResultCorrect && isOverflowResultCorrect) {
-	    text = "Correct!";
-	  }
-	  else { // wrong overflow/carry input
-	    text = "Correct addition result, but ";
-	    if (!isOverflowResultCorrect) {
-	      text += "incorrect overflow result.";
+          isCarryResultCorrect && isOverflowResultCorrect) {
+	      text = "Correct!";
 	    }
-	    if (!isCarryResultCorrect) {
-		  text += "incorrect carry-out-of-MSB result.";
+	    else { // wrong overflow/carry input
+	      text = "Correct addition result, but ";
+	      if (!isOverflowResultCorrect) {
+	        text += "incorrect overflow result.";
+	      }
+	      if (!isCarryResultCorrect) {
+		      text += "incorrect carry-out-of-MSB result.";
+	      }
 	    }
-	  }
     } else {
-	  text = "Incorrect addition result. Try again.";
+	    text = "Incorrect addition result. Try again.";
     }
 
   } // end else
@@ -405,9 +405,9 @@ function p2A_ShowAnswer() {
   }
 
   var stepsStr = " Perform bit wise addition, starting from LSB:<br>" +
-  "    " + bStr2Com1 + "<br>" +
-  "+   " + bStr2Com2 + "<br>" +
-  "------------ <br>" + "=" ;
+      "    " + bStr2Com1 + "<br>" +
+      "+   " + bStr2Com2 + "<br>" +
+      "------------ <br>" + "=" ;
   if (isCarryOut) {
     stepsStr += "(1)" + bStrAddResult + "<br>";
   } else {
@@ -487,18 +487,18 @@ function p3A_CheckResult() {
   var digit = parseInt(x, 2); // student answer
 
   if (x.length == 0) {
-	text = "Please provide a response.";
+	  text = "Please provide a response.";
   } else if (!overflowInput[0].checked && !overflowInput[1].checked) {
-	text = "Please specify whether overflow happened.";
+	  text = "Please specify whether overflow happened.";
   } else if (!carryInput[0].checked && !carryInput[1].checked) {
-	text = "Please specify whether there was a carry out of the MSB.";
+	  text = "Please specify whether there was a carry out of the MSB.";
   }else if (isNaN(digit)) {
     text = "Incorrect - not a Two's Complement number. Try again.";
   } else if (x.length != SIZE) {
     text = "Incorrect - not " + (+SIZE).toString() + " bits. Try again.";
   } else {
-	var bStr2Com1 = document.getElementById("p3A_Data1").innerHTML; // given n1, 2's complement as string
-	var bStr2Com2 = document.getElementById("p3A_Data2").innerHTML; // given n2, 2's complement as string
+	  var bStr2Com1 = document.getElementById("p3A_Data1").innerHTML; // given n1, 2's complement as string
+	  var bStr2Com2 = document.getElementById("p3A_Data2").innerHTML; // given n2, 2's complement as string
 
     var bStrSubResultRaw = subTwoCompl(bStr2Com1, bStr2Com2, SIZE); // raw subtraction result
     var bStrSubResult = bStrSubResultRaw.substr(1, SIZE);
@@ -519,17 +519,17 @@ function p3A_CheckResult() {
     if (x == bStrSubResult) {
       // if overflow, it's okay to just check overflow result
       if (isOverflow && isOverflowResultCorrect ||
-        isCarryResultCorrect && isOverflowResultCorrect) {
-	  text = "Correct!";
-	} else { // wrong overflow/carry input
-	  text = "Correct subtraction result, but ";
-	  if (overflowInput != isOverflow) {
-	    text += "incorrect overflow result.";
-	  }
-	  if (carryInput != isCarryOut) {
-	    text += "incorrect carry-out-of-MSB result.";
-	  }
-	}
+          isCarryResultCorrect && isOverflowResultCorrect) {
+	      text = "Correct!";
+	    } else { // wrong overflow/carry input
+	      text = "Correct subtraction result, but ";
+	      if (overflowInput != isOverflow) {
+	        text += "incorrect overflow result.";
+	      }
+	      if (carryInput != isCarryOut) {
+	        text += "incorrect carry-out-of-MSB result.";
+	      }
+	    }
     } else {
       text = "Incorrect subtraction result. Try again.";
     }
@@ -559,13 +559,13 @@ function p3A_ShowAnswer() {
   }
 
   var stepsStr = " Perform a - b as a + (-b), starting from LSB:<br>" +
-  "    " + bStr2Com1 + "<br>" +
-  "-   " + bStr2Com2 + "<br>" +
-  "------------ <br>" + "=" +
-  "   " + bStr2Com1 + "<br>" +
-  "    " + get1Com(bStr2Com2, SIZE) + "<br>" +
-  "+          1<br>" +
-  "------------ <br>" + "=";
+      "    " + bStr2Com1 + "<br>" +
+      "-   " + bStr2Com2 + "<br>" +
+      "------------ <br>" + "=" +
+      "   " + bStr2Com1 + "<br>" +
+      "    " + get1Com(bStr2Com2, SIZE) + "<br>" +
+      "+          1<br>" +
+      "------------ <br>" + "=";
   if (isCarryOut) {
     stepsStr += "(1)" + bStrSubResult + "<br>";
   } else {

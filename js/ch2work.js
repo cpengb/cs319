@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 7/30/2021
+// Last updated: 10/20/2021
 // Copyright reserved
 
 //==================================
@@ -60,18 +60,27 @@ function p1ShowAnswer() {
   var nStr = parseInt(bStr, 2); // result
 
   var n = 0; // result
-  var steps = "";
+  var steps1 = "Those bit positions have 1s: ";
+  var steps2 = "";
   var i = 0; // loop variables
 
   for (i=0; i<bStr.length; i++) { // [0] is the MSB
     var ch = bStr.charAt(i);
     if (ch == '1') {
-      if (i>0) steps += " + ";
-      steps += "2<sup>" + (bStr.length-1 - i) + "</sup>";
+      if (i>0) { 
+        steps1 += ", ";
+        steps2 += " + ";
+      }
+      steps1 += "" + (bStr.length-1 - i);
+      steps2 += "2<sup>" + (bStr.length-1 - i) + "</sup>";
     }
   }
 
-  document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + " = " + steps + "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)<br>";
+  document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + 
+      "<br>" + steps1 + 
+      "<br>(The rightmost bit/least significant bit/LSB is at position 0)<br>" + 
+      " -> the value is " + steps2 + 
+      "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
@@ -138,7 +147,7 @@ function p2ShowAnswer() {
     for (i=0; i<bStr.length; i++) {
       var ch = bStr.charAt(bStr.length-1 - i);
       var half = Math.floor(n / 2);
-      steps += "<br />" + n + " / 2 = " + half + ", rem " + ch ;
+      steps += "<br />" + n + " / 2 = " + half + ", remainder " + ch ;
       n = half;
     }
   }

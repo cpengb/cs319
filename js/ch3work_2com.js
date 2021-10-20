@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 1/16/2021
+// Last updated: 10/20/2021
 // Copyright reserved
 
 //==================================
@@ -21,15 +21,15 @@ const SIZE = 8;  // 8-bit two's complement
 function fillTo(str, fillerStr, n) {
   var resultStr = "";
   if (str.length < n) { // too few, need to add
-	resultStr = str;
-	var i;
-	for (i=str.length; i<n; i++) {
+	  resultStr = str;
+	  var i;
+	  for (i=str.length; i<n; i++) {
       resultStr = fillerStr + resultStr;
-	}
+	  }
   } else if (str.length > n) { // too many, need to chop
-	resultStr = str.substr(str.length-n, n);
+	  resultStr = str.substr(str.length-n, n);
   } else {
-	resultStr = str;
+	  resultStr = str;
   }
   return resultStr;
 } // end function fillTo
@@ -44,24 +44,24 @@ function decTo2Com(num, n) {
 	bStr2Com = (+num).toString(2); // binary. [0] is MSB, [str.length-1] is LSB
     bStr2Com = fillTo(bStr2Com, "0", n);  // fill to 8 bits with leading 0s
   } else { // negative
-	var tmp = (-num).toString(2); // -n's binary. [0] is MSB, [str.length-1] is LSB
-	tmp = fillTo(tmp, "0", n); // fill to 8 bits with leading 0s
+	  var tmp = (-num).toString(2); // -n's binary. [0] is MSB, [str.length-1] is LSB
+	  tmp = fillTo(tmp, "0", n); // fill to 8 bits with leading 0s
 
-	// flip to get 1's complement
-	var i;
-	var bStr1Com = "";  // 1's complement
-	for (i=0; i<tmp.length; i++) {
-	  if (tmp.charAt(i)=='0') {
-		bStr1Com += "1";
-	  } else {
-	    bStr1Com += "0";
+	  // flip to get 1's complement
+	  var i;
+	  var bStr1Com = "";  // 1's complement
+	  for (i=0; i<tmp.length; i++) {
+	    if (tmp.charAt(i)=='0') {
+		    bStr1Com += "1";
+	    } else {
+	      bStr1Com += "0";
+	    }
 	  }
-	}
 
-	// add 1. pretend bStr1Com is a unsigned binary
-	var n1Com = parseInt(bStr1Com, 2);  // 1's complement as an unsigned int value
-	n1Com = n1Com + 1;
-	tmp = n1Com.toString(2);
+	  // add 1. pretend bStr1Com is a unsigned binary
+	  var n1Com = parseInt(bStr1Com, 2);  // 1's complement as an unsigned int value
+	  n1Com = n1Com + 1;
+	  tmp = n1Com.toString(2);
 
     bStr2Com = fillTo(tmp, "1", n);  // maybe longer than n bits
   }
@@ -76,11 +76,11 @@ function twoComToDec(str, n) {
   // if positive
   var num = 0;
   if (str.charAt(0) == '0') { // positive
-	num = parseInt(str, 2);
+	  num = parseInt(str, 2);
   } else { // negative
-	var tmp = negate(str, n); // find (-n)'s 2's complement.
-	num = parseInt(tmp, 2);  // -n, a positive value
-	num = -num;
+	  var tmp = negate(str, n); // find (-n)'s 2's complement.
+	  num = parseInt(tmp, 2);  // -n, a positive value
+	  num = -num;
   }
 
   return num;
@@ -98,8 +98,8 @@ function get1Com(str, n) {
     if (str.charAt(i)=='0') {
       bStr1Com += "1";
     } else {
-	  bStr1Com += "0";
-	}
+	    bStr1Com += "0";
+	  }
   }
 
   return bStr1Com;
@@ -163,9 +163,8 @@ function p1CheckResult() {
     text = "Please provide a response.";
   else if ( isNaN(digit) )
     text = "Incorrect - not a decimal number. Try again.";
-  else
-  {
-	var bStr2Com = document.getElementById("p1Data").innerHTML; // given 2's complement as string
+  else {
+	  var bStr2Com = document.getElementById("p1Data").innerHTML; // given 2's complement as string
     var n = twoComToDec(bStr2Com, SIZE); // given number
     if (digit == n)
       text = "Correct!";
@@ -186,18 +185,19 @@ function p1ShowAnswer() {
   var tmpStr = "";  // will hold the unsigned binary str
   var stepsStr = "";
   if (n>=0) { // positive
-	stepsStr = "MSB is 0: not negative<br> -> same as unsigned binary int <br> ->";
-	tmpStr = bStr2Com;
+	  stepsStr = "MSB is 0: not negative<br> -> same as unsigned binary int <br> ->";
+	  tmpStr = bStr2Com;
   } else {
-	stepsStr = "MSB is 1: negative (next find out its absolute value)<br> -> Flip each bit: ";
-	stepsStr += get1Com(bStr2Com, SIZE) + "<br> -> Add 1:         ";
-	tmpStr = negate(bStr2Com, SIZE);
-	stepsStr += tmpStr + "<br> -> now same as unsigned binary int <br> ->";
+	  stepsStr = "MSB is 1: negative (next find out its absolute value)<br> -> Flip each bit: ";
+	  stepsStr += get1Com(bStr2Com, SIZE) + "<br> -> Add 1:         ";
+	  tmpStr = negate(bStr2Com, SIZE);
+	  stepsStr += tmpStr + "<br> -> now same as unsigned binary int <br> ->";
   }
 
   var i = 0; // bit position
-  while (i < tmpStr.length && tmpStr.charAt(i) == '0') // find first 1 bit starting from MSB [0]
+  while (i < tmpStr.length && tmpStr.charAt(i) == '0') { // find first 1 bit starting from MSB [0]
     i++;
+  }
   var isFirst = true;  // is there a first non-zero bit? Used to decide if all 0s
   for (; i<tmpStr.length; i++) {
     var ch = tmpStr.charAt(i);
@@ -263,7 +263,7 @@ function p2CheckResult() {
   else if (x.length != SIZE)
     text = "Incorrect - not " + (+SIZE).toString() + " bits. Try again.";
   else {
-	var nStr = document.getElementById("p2Data").innerHTML; // given num as string
+	  var nStr = document.getElementById("p2Data").innerHTML; // given num as string
     var n = parseInt(nStr); // given number
     var bStr2Com = decTo2Com(n, SIZE);  // given number's 2's complement
 
@@ -288,8 +288,8 @@ function p2ShowAnswer() {
   var stepsStr = "";
   var bStr = ""; // hold unsigned binary str
   if (n != 0) {
-	var absN = Math.abs(n);  // absolute value of n
-	bStr = (+absN).toString(2);  // hold unsigned binary str
+	  var absN = Math.abs(n);  // absolute value of n
+	  bStr = (+absN).toString(2);  // hold unsigned binary str
     for (i=0; i<bStr.length; i++) {
       var ch = bStr.charAt(bStr.length-1 - i);
       var half = Math.floor(absN / 2);
@@ -298,21 +298,21 @@ function p2ShowAnswer() {
     }
     bStr = fillTo(bStr, "0", SIZE); // absolute value's binary in SIZE # of bits
     stepsStr += "<br> -> " +  bStr +
-                    " (The first remainder is least significant bit/LSB. <br>" +
+                    " (The first remainder is the least significant bit/LSB. <br>" +
   					"Add additional leading 0s to make " + (+SIZE).toString() + " bits. )";
   }
 
   // show how to convert a decimal to 2's complement
   if (n == 0) {
-	var tempStr = "0";
-	stepStr = "Zero, 2's complement is same as unsigned binary int: " + fillTo(tempStr, "0", SIZE);
+	  var tempStr = "0";
+	  stepsStr = "Zero, its 2's complement is the same as unsigned binary int: " + fillTo(tempStr, "0", SIZE);
   } else if (n>0) { // positive
-	stepsStr = " Positive<br> -> 2's complement is same as unsigned binary int<br> ->" + stepsStr;
+	  stepsStr = " Positive<br> -> its 2's complement is the same as unsigned binary int<br> ->" + stepsStr;
   } else { // negative
-	stepsStr = " Negative: find 2's complement of its absolute value then negate<br> -> (-n)'s 2's complement<br> ->" + stepsStr;
-	stepsStr += "<br> -> Next negate this 2's complement number: " + bStr;
-	stepsStr += "<br> -> -> Flip each bit: " + get1Com(bStr, SIZE);
-	stepsStr += "<br> -> -> Add 1:         " + bStr2Com;
+	  stepsStr = " Negative: find 2's complement of its absolute value and then negate<br> -> (-n)'s 2's complement<br> ->" + stepsStr;
+	  stepsStr += "<br> -> Next negate this 2's complement number: " + bStr;
+	  stepsStr += "<br> -> -> Flip each bit: " + get1Com(bStr, SIZE);
+	  stepsStr += "<br> -> -> Add 1:         " + bStr2Com;
   }
 
   document.getElementById("p2Answer").innerHTML = "Answer: " + bStr2Com + "<br><pre>Given " + n + "<br> ->" + stepsStr + "</pre>";
