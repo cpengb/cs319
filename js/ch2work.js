@@ -77,10 +77,10 @@ function p1ShowAnswer() {
   }
 
   document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + 
-      "<br>Given " + bStr + ", <br>" + steps1 + 
+      "<br><pre>Given " + bStr + ", <br>" + steps1 + 
       "<br>(The rightmost bit/least significant bit/LSB is at position 0)<br>" + 
       " -> the value is " + steps2 + 
-      "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)";
+      "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)</pre>";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
