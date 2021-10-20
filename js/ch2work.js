@@ -187,15 +187,16 @@ function p3CheckResult() {
   // parse the binary in it. if not a valid binary number, will get a NaN
   var digit = parseInt(x, 2);
 
-  if (x.length == 0)
+  if (x.length == 0) {
     text = "Please provide a response.";
-  else if (isNaN(digit))
+  } else if (isNaN(digit)) {
     text = "Incorrect - not a binary number. Try again.";
-  else {
+  } else {
     var nStr = document.getElementById("p3Data").innerHTML;
     var bStr = (+nStr).toString(2); // binary
-	if (bStr.length > 10)
+	  if (bStr.length > 10) { // 10 chars: 0. plus 8     
       bStr = bStr.substr(0, 10); // chop off extra bits beyond 8
+    }
 
     if (x == bStr) // only okay up to 8 bits after point. Can't have extra bits, even if 0s. !!
       text = "Correct!";
@@ -212,10 +213,10 @@ function p3CheckResult() {
 function p3ShowAnswer() {
   var nStr = document.getElementById("p3Data").innerHTML;
   var bStr = (+nStr).toString(2); // binary
-  if (bStr.length > 10)
+  if (bStr.length > 10) {
     bStr = bStr.substr(0, 10); // chop off extra bits beyond 8 binary digits
                                // 10 chars: 0. + 8 digits after .
-
+  }
   var n = nStr;
 
   var steps = "";
