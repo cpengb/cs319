@@ -41,7 +41,7 @@ function decTo2Com(num, n) {
   var bStr2Com = "";  // 2's complement
 
   if (num >= 0) {
-	bStr2Com = (+num).toString(2); // binary. [0] is MSB, [str.length-1] is LSB
+	  bStr2Com = (+num).toString(2); // binary. [0] is MSB, [str.length-1] is LSB
     bStr2Com = fillTo(bStr2Com, "0", n);  // fill to 8 bits with leading 0s
   } else { // negative
 	  var tmp = (-num).toString(2); // -n's binary. [0] is MSB, [str.length-1] is LSB
