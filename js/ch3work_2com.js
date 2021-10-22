@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 10/20/2021
+// Last updated: 10/22/2021
 // Copyright reserved
 
 //==================================
@@ -85,6 +85,33 @@ function twoComToDec(str, n) {
 
   return num;
 } // end function twoComToDec
+
+//==================================
+
+// the steps in a big string to convert an unsigned binary to decimal 
+function getUnsignedBinStrSteps(str) {
+  var stepStrs = "";
+  var i = 0; // bit position
+  while (i < str.length && str.charAt(i) == '0') { // find first 1 bit starting from MSB [0]
+    i++;
+  }
+  if (i==str.length) // all 0s. return ""
+    return stepStrs;  
+
+  var foundOne = false;  // used to detect the first 1s
+  for (; i<str.length; i++) {
+    var ch = str.charAt(i);
+    if (ch == '1') {
+      if (!foundOne) // this is the first 1s
+        foundOne = true;
+      else
+        stepStrs += " + ";
+
+      stepStrs += "2<sup>" + (str.length-1 - i) + "</sup>";
+    }
+  }
+  return stepStrs;
+} // end function getUnsignedBinStrSteps
 
 //==================================
 
@@ -185,38 +212,37 @@ function p1ShowAnswer() {
   var tmpStr = "";  // will hold the unsigned binary str
   var stepsStr = "";
   if (n>=0) { // positive
-	  stepsStr = "MSB is 0: not negative<br> -> same as unsigned binary int <br> ->";
+	  stepsStr = "<br> -> MSB is 0: not negative<br> -> same as unsigned binary int<br> -> ";
 	  tmpStr = bStr2Com;
+    stepsStr += getUnsignedBinStrSteps(tmpStr);
+    if (n > 0) 
+      stepsStr += " = " + (n).toString();
+    else
+      stepsStr += "0"; 
   } else {
-	  stepsStr = "MSB is 1: negative (next find out its absolute value)<br> -> Flip each bit: ";
-	  stepsStr += get1Com(bStr2Com, SIZE) + "<br> -> Add 1:         ";
-	  tmpStr = negate(bStr2Com, SIZE);
-	  stepsStr += tmpStr + "<br> -> now same as unsigned binary int <br> ->";
-  }
-
-  var i = 0; // bit position
-  while (i < tmpStr.length && tmpStr.charAt(i) == '0') { // find first 1 bit starting from MSB [0]
-    i++;
-  }
-  var isFirst = true;  // is there a first non-zero bit? Used to decide if all 0s
-  for (; i<tmpStr.length; i++) {
-    var ch = tmpStr.charAt(i);
-    if (ch == '1') {
-      if (isFirst)
-        isFirst = false;
-      else
-        stepsStr += " + ";
-      stepsStr += "2<sup>" + (tmpStr.length-1 - i) + "</sup>";
+	  stepsStr = "<br> -> MSB is 1: negative";
+    stepsStr += "<br><br> -> Approach 1: similar to converting an unsiged binary int, <br>    but MSB carries a negative weight:";
+    stepsStr += "<br> ->-> -(2)<sup>"+ (SIZE).toString() + "</sup> " ;
+    tmpStr = bStr2Com.substr(1); // chop off MSB, the leading 1s. 
+    var resultStr = getUnsignedBinStrSteps(tmpStr);
+    if (resultStr.length != 0) { // not "" result i.e. not 0
+      stepsStr += " + " + resultStr;
     }
+    stepsStr += " = " + (n).toString();  
+
+    stepsStr += "<br><br> -> Approach 2: find out its absolute value<br> ->-> Flip each bit: ";
+	  stepsStr += get1Com(bStr2Com, SIZE) + "<br> ->-> Add 1:         ";
+	  tmpStr = negate(bStr2Com, SIZE);
+	  stepsStr += tmpStr + "<br> ->-> now same as unsigned binary int <br> ->-> ";
+    stepsStr += getUnsignedBinStrSteps(tmpStr);
+    stepsStr += " = " + (-n).toString();
+    stepsStr += "<br> ->-> add - to the result";
   }
-  if (isFirst)  // must be a 0 value
-    stepsStr += "0";
-  else
-    stepsStr += " = " + (+(Math.abs(n))).toString();
 
   document.getElementById("p1Answer").innerHTML = "Answer: " + n + "<br><pre>Given " +
-                               bStr2Com + "<br> ->" + stepsStr +
-                               "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)</pre>";
+      bStr2Com + stepsStr + 
+      "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)</pre>";
+  
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
