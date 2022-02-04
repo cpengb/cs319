@@ -469,7 +469,7 @@ function p2ShowAnswer() {
   stepsStr += "<br/>->-> drop leading 1. of " + "1." + newFBStr + " -> fraction part: " + newFBStr;
   stepsStr += "<br/><br/>-> together: sign-bit " + biasedExpStr + " " + newFBStr;
   if (newFBStr.charAt(newFBStr.length-1) != '*')
-    stepsStr += " (add trailing 0s to reach 23 bits)";
+    stepsStr += "(add trailing 0s to reach 23 bits)";
 
   document.getElementById("p2Answer").innerHTML = "Answer: " + resultStr + "<br><pre>Given " + nStr + "<br>->" + stepsStr + "</pre>";
   document.getElementById("p2AnswerBtn").disabled = true; // turn off Answer button
