@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 10/20/2021
+// Last updated: 2/4/2022
 // Copyright reserved
 
 //==================================
@@ -194,11 +194,11 @@ function p3CheckResult() {
   } else {
     var nStr = document.getElementById("p3Data").innerHTML;
     var bStr = (+nStr).toString(2); // binary
-	  if (bStr.length > 10) { // 10 chars: 0. plus 8     
-      bStr = bStr.substr(0, 10); // chop off extra bits beyond 8
+	  if (bStr.length > 8) { // 8 chars: 0. plus 6     
+      bStr = bStr.substr(0, 8); // chop off extra bits beyond 8
     }
 
-    if (x == bStr) // only okay up to 8 bits after point. Can't have extra bits, even if 0s. !!
+    if (x == bStr) // only okay up to 6 bits after point. Can't have extra bits, even if 0s. !!
       text = "Correct!";
     else
       text = "Incorrect. Try again.";
@@ -213,9 +213,9 @@ function p3CheckResult() {
 function p3ShowAnswer() {
   var nStr = document.getElementById("p3Data").innerHTML;
   var bStr = (+nStr).toString(2); // binary
-  if (bStr.length > 10) {
-    bStr = bStr.substr(0, 10); // chop off extra bits beyond 8 binary digits
-                               // 10 chars: 0. + 8 digits after .
+  if (bStr.length > 8) {
+    bStr = bStr.substr(0, 8); // chop off extra bits beyond 6 binary digits
+                               // 8 chars: 0. + 6 digits after .
   }
   var n = nStr;
 
@@ -225,7 +225,7 @@ function p3ShowAnswer() {
   if (n == 0)
     steps = "0";
   else {
-    while (n > 0 && i<8) {
+    while (n > 0 && i<6) {
       var dbl = (n * 2).toFixed(3);  // to maintain at most 3 decimal digits
       var ch = 0;
       if (dbl >=1)
