@@ -33,10 +33,10 @@
     <td>2. Please negate this 2's complement number <br/>and indicate whether overflow happened:</td>
     <td>-</td>
     <td><input id="p1A_Input"> (Enter result here)<br/>
+        <input name ="p1A_Input_Overflow" id="p1A_Input_Overflow_Y" type="radio" value="Y"><label for="p1A_Input_Overflow_Y">Yes</label>
+        <input name ="p1A_Input_Overflow" id="p1A_Input_Overflow_N" type="radio" value="N"><label for="p1A_Input_Overflow_N">No</label>
         Overflow?
-         <input name ="p1A_Input_Overflow" id="p1A_Input_Overflow_Y" type="radio" value="Y"><label for="p1A_Input_Overflow_Y">Yes</label>
-         <input name ="p1A_Input_Overflow" id="p1A_Input_Overflow_N" type="radio" value="N"><label for="p1A_Input_Overflow_N">No</label>
-    </td>
+      </td>
   </tr>
   <tr>
   <td>3. Now check your answer:</td>
@@ -61,13 +61,12 @@
     <td>2. Please add them together and specify any carry/overflow:</td>
     <td>-</td>
     <td><input id="p2A_Input"> (Enter result here. Should be 8 bits)<br/>
-        Overflow?
         <input name ="p2A_Input_Overflow" id="p2A_Input_Overflow_Y" type="radio" value="Y"><label for="p2A_Input_Overflow_Y">Yes</label>
 	<input name ="p2A_Input_Overflow" id="p2A_Input_Overflow_N" type="radio" value="N"><label for="p2A_Input_Overflow_N">No</label>
-	<br/>
-        Carry out of MSB?
+  Overflow?
+  <br/>
         <input name ="p2A_Input_Carry" id="p2A_Input_Carry_Y" type="radio" value="Y"><label for="p2A_Input_Carry_Y">Yes</label>
-	<input name ="p2A_Input_Carry" id="p2A_Input_Carry_N" type="radio" value="N"><label for="p2A_Input_Carry_N">No</label>
+	<input name ="p2A_Input_Carry" id="p2A_Input_Carry_N" type="radio" value="N"><label for="p2A_Input_Carry_N">No</label> Carry out of MSB?
     </td>
   </tr>
   <tr>
@@ -93,14 +92,14 @@
     <td>2. Please perform subtraction and specify any carry/overflow:</td>
     <td>-</td>
     <td><input id="p3A_Input"> (Enter result here. Should be 8 bits)<br/>
-        Overflow?
         <input name ="p3A_Input_Overflow" id="p3A_Input_Overflow_Y" type="radio" value="Y"><label for="p3A_Input_Overflow_Y">Yes</label>
 	<input name ="p3A_Input_Overflow" id="p3A_Input_Overflow_N" type="radio" value="N"><label for="p3A_Input_Overflow_N">No</label>
-	<br/>
-        Carry out of MSB?
+	Overflow?
+  <br/>
         <input name ="p3A_Input_Carry" id="p3A_Input_Carry_Y" type="radio" value="Y"><label for="p3A_Input_Carry_Y">Yes</label>
 	<input name ="p3A_Input_Carry" id="p3A_Input_Carry_N" type="radio" value="N"><label for="p3A_Input_Carry_N">No</label>
-    </td>
+  Carry out of MSB?  
+</td>
   </tr>
   <tr>
   <td>3. Now check your answer:</td>
