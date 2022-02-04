@@ -221,7 +221,7 @@ function p1ShowAnswer() {
       stepsStr += "0"; 
   } else {
 	  stepsStr = "<br> -> MSB is 1: negative";
-    stepsStr += "<br><br> -> Approach 1: similar to converting an unsiged binary int, <br>    but MSB carries a negative weight:";
+    stepsStr += "<br><br> -> Approach 1: similar to converting an unsigned binary int, <br>    but MSB carries a negative weight:";
     stepsStr += "<br> ->-> -(2)<sup>"+ (SIZE).toString() + "</sup> " ;
     tmpStr = bStr2Com.substr(1); // chop off MSB, the leading 1s. 
     var resultStr = getUnsignedBinStrSteps(tmpStr);
@@ -236,7 +236,7 @@ function p1ShowAnswer() {
 	  stepsStr += tmpStr + "<br> ->-> now same as unsigned binary int <br> ->-> ";
     stepsStr += getUnsignedBinStrSteps(tmpStr);
     stepsStr += " = " + (-n).toString();
-    stepsStr += "<br> ->-> add - to the result";
+    stepsStr += "<br> ->-> add sign - to the result: " + (n).toString();
   }
 
   document.getElementById("p1Answer").innerHTML = "Answer: " + n + "<br><pre>Given " +
