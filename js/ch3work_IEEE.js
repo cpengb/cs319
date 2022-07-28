@@ -3,7 +3,7 @@
 //
 // Author: Bin Peng
 // Created:  8/27/2019
-// Last updated: 10/18/2021
+// Last updated: 7/28/2022
 // Copyright reserved
 
 //==================================
@@ -62,8 +62,8 @@ function fillTo(str, fillerStr, n) {
     for (i=str.length; i<n; i++) {
       resultStr = fillerStr + resultStr;
     }
-  } else if (str.length > n) { // too many, need to chop
-    resultStr = str.substr(str.length-n, n);
+  } else if (str.length > n) { // too many, chop. keep tail portion
+    resultStr = str.substring(str.length-n);
   } else {
     resultStr = str;
   }
@@ -75,8 +75,8 @@ function fillTo(str, fillerStr, n) {
 // pad str with trailing single-char fillerStr to n bits
 function padTo(str, fillerStr, n) {
   var resultStr;
-  if (str.length > n)
-    resultStr = str.substr(0, n); // chop off
+  if (str.length > n) // too long. chop off tail portion
+    resultStr = str.substring(0, n); // chop off
   else if (str.length < n) {
     // add trailing fillers
     var numOfFillersToAdd = n - str.length;
@@ -94,9 +94,9 @@ function padTo(str, fillerStr, n) {
 // Part 1
 // convert a 32-bit IEEE 754 (as a string) to decimal (as a string)
 function ieeeStrToDecStr(str, n) {
-  var x1 = str.substr(0, 1);  // sign
-  var x2 = str.substr(1, 8);  // exponent
-  var x3 = str.substr(9);     // significand
+  var x1 = str.substring(0, 1);  // sign
+  var x2 = str.substring(1, 8+1);  // exponent
+  var x3 = str.substring(9);     // significand
 
   // x2: get true value of exponent
   var biasedExp = parseInt(x2, 2);
@@ -104,7 +104,7 @@ function ieeeStrToDecStr(str, n) {
 
   // x3: discard trailing zeros
   var indexOfLastOne = x3.lastIndexOf("1");
-  var x3_trimmed = x3.substr(0, indexOfLastOne+1);
+  var x3_trimmed = x3.substring(0, indexOfLastOne+1);
 
   // put x2 and x3 together
   // highest power is realExp, lowest power is (realExp - x3_trimmed.length)
@@ -151,20 +151,20 @@ function decToIEEE(num, n) {
     if (indexOfPoint == 1 && bStr.charAt(0)=="1" || indexOfPoint > 1) {// w a non-zero int part: xxx.xx
       realExp = indexOfPoint - 1;
       if (indexOfPoint == 0) { // 1.xxx
-        fStr = bStr.substr(indexOfPoint + 1); // fraction: after .
+        fStr = bStr.substring(indexOfPoint + 1); // fraction: after .
       } else { // xxx.xx
-        fStr = bStr.substring(1, indexOfPoint) + bStr.substr(indexOfPoint + 1);
+        fStr = bStr.substring(1, indexOfPoint) + bStr.substring(indexOfPoint + 1);
             // substring: [start, end). not include the ending index
             // after 1st one in int part till before . + fraction (after .) 
       }
     } else { // 0.xxx: int part zero i.e. just a fraction value
       var indexOfFirstOne = bStr.indexOf("1"); // first non-zero digit
       realExp = -(indexOfFirstOne - 1);
-      fStr = bStr.substr(indexOfFirstOne + 1); // after 1st one in fraction
+      fStr = bStr.substring(indexOfFirstOne + 1); // after 1st one in fraction
     }
   } else { // all int bits
     realExp = bStr.length - 1;
-    fStr = bStr.substr(1);
+    fStr = bStr.substring(1);
   }
 
   // biased exponent
@@ -204,10 +204,10 @@ function p1RandomN() {
   var f_bPart = f_bArr[f_index];
 
   var ieeeStr = sign.toString() + fillTo(biasedExp.toString(2), "0", 8) + padTo(f_bPart, "0", 23);
-  var ieeeStrDisplay = ieeeStr.substr(0, 8) + " " +
-                       ieeeStr.substr(8, 8) + " " +
-                       ieeeStr.substr(16, 8) + " " +
-                       ieeeStr.substr(24); // space between every 8 bits
+  var ieeeStrDisplay = ieeeStr.substring(0, 8) + " " +
+                       ieeeStr.substring(8, 8+8) + " " +
+                       ieeeStr.substring(16, 8+16) + " " +
+                       ieeeStr.substring(24); // space between every 8 bits
 
   // display number
   document.getElementById("p1Data").innerHTML = ieeeStrDisplay;
@@ -231,10 +231,10 @@ function p1CheckResult() {
   else { // otherwise hard to check user work. Just show answer
     // Get the question
     var ieeeStrDisplay = document.getElementById("p1Data").innerHTML; // given IEEE 754 as string with spaces
-    var ieeeStr = ieeeStrDisplay.substr(0, 8) +
-                ieeeStrDisplay.substr(9, 8) +
-                ieeeStrDisplay.substr(18, 8) +
-                ieeeStrDisplay.substr(27); // take out spaces between 8-bit sets
+    var ieeeStr = ieeeStrDisplay.substring(0, 8) +
+                ieeeStrDisplay.substring(9, 8+9) +
+                ieeeStrDisplay.substring(18, 8+18) +
+                ieeeStrDisplay.substring(27); // take out spaces between 8-bit sets
 
     var nStr = ieeeStrToDecStr(ieeeStr, SIZE);  // result as String
     text ="Answer should be: " + nStr + " or equivalent."; // result to display
@@ -248,20 +248,20 @@ function p1CheckResult() {
 
 function p1ShowAnswer() {
   var ieeeStrDisplay = document.getElementById("p1Data").innerHTML; // given IEEE 754 as string with spaces
-  var ieeeStr = ieeeStrDisplay.substr(0, 8) +
-                ieeeStrDisplay.substr(9, 8) +
-                ieeeStrDisplay.substr(18, 8) +
-                ieeeStrDisplay.substr(27); // take out spaces between 8-bit sets
+  var ieeeStr = ieeeStrDisplay.substring(0, 8) +
+                ieeeStrDisplay.substring(9, 8+9) +
+                ieeeStrDisplay.substring(18, 8+18) +
+                ieeeStrDisplay.substring(27); // take out spaces between 8-bit sets
 
   var nStr = ieeeStrToDecStr(ieeeStr, SIZE);  // result as String
 
   var stepsStr = "";
 
   // three parts
-  var x1 = ieeeStr.substr(0, 1);  // sign
-  var x2 = ieeeStr.substr(1, 8);  // exponent
-  var x3 = ieeeStr.substr(9);     // significand
-  stepsStr = " three parts: " + x1 + " " + x2 + " " + x3;
+  var x1 = ieeeStr.substring(0, 1);  // sign
+  var x2 = ieeeStr.substring(1, 8+1);  // exponent
+  var x3 = ieeeStr.substring(9);     // significand
+  stepsStr = " three parts: " + x1 + " <span style='color:blue;'>" + x2 + "</span> <span style='color:orange;'>" + x3 + "</span>";
 
   // sign
   stepsStr += "<br/>-> sign bit " + x1;
@@ -273,22 +273,22 @@ function p1ShowAnswer() {
   // exponent
   var biasedExp = parseInt(x2, 2);
   var realExp = biasedExp - BIAS;
-  stepsStr += "<br/>-> biased exp " + x2 + " i.e. " + biasedExp + " -> true exp: " + biasedExp + "-127 = " + realExp;
+  stepsStr += "<br/>-> biased exp <span style='color:blue;'>" + x2 + "</span> i.e. " + biasedExp + " -> true exp: " + biasedExp + "-127 = <span style='color:blue;'>" + realExp + "</span>";
 
   // fraction: discard trailing zeros
   var indexOfLastOne = x3.lastIndexOf("1");
-  var x3_trimmed = x3.substr(0, indexOfLastOne+1);
-  stepsStr += "<br/>-> fraction part after discarding trailing 0s: " + x3_trimmed;
+  var x3_trimmed = x3.substring(0, indexOfLastOne+1);
+  stepsStr += "<br/>-> <span style='color:orange;'>fraction part</span> after discarding trailing 0s: <span style='color:orange;'>" + x3_trimmed + "</span>";
   var x3_trimmed_with1dot; // 1. + x3_trimmed
   if (x3_trimmed.length == 0) { // nothing in fraction
-    x3_trimmed_with1dot = "1.0";
+    x3_trimmed_with1dot = "<span style='color:purple;'>1.</span><span style='color:orange;'>0</span>";
   } else {
-    x3_trimmed_with1dot = "1." + x3_trimmed;
+    x3_trimmed_with1dot = "<span style='color:purple;'>1.</span><span style='color:orange;'>" + x3_trimmed + "</span>";
   }
-  stepsStr += "<br/>->-> add 1. to fraction: " + x3_trimmed_with1dot;
+  stepsStr += "<br/>->-> add <span style='color:purple;'>1.</span> to fraction: " + x3_trimmed_with1dot;
 
   // together: put x2 and x3 together
-  var numStr = x3_trimmed_with1dot + "<sub>2</sub> x 2<sup>" + realExp + "</sup>";
+  var numStr = x3_trimmed_with1dot + "<sub>2</sub> x 2<sup><span style='color:blue;'>" + realExp + "</span></sup>";
   if (x1 == "1")
     numStr = "-" + numStr;
   stepsStr += "<br/><br/>-> together: " + numStr;
@@ -445,31 +445,31 @@ function p2ShowAnswer() {
   if (absN - intAbsN > 0) // w fraction
     fBStr = f_binStrArr[f_index];
 
-  stepsStr += "<br/>-> " + Math.abs(n) + " to unsigned binary: " + intBStr + fBStr;
+  stepsStr += "<br/>-> absolute value " + Math.abs(n) + " to unsigned binary: " + intBStr + fBStr;
 
   // normalize
   stepsStr += "<br/>-> normalize: ";
   var newFBStr = "";
   if (realExp > 0) { // global var: realExp
                      // move dot left
-    //stepsStr += intBStr.substr(0, intBStr.length-realExp) + ".";
-    newFBStr = intBStr.substr(intBStr.length-realExp) + fBStr.substr(1);
+    //stepsStr += intBStr.substring(0, intBStr.length-realExp) + ".";
+    newFBStr = intBStr.substring(intBStr.length-realExp) + fBStr.substring(1);
   } else if (realExp < 0) { // move dot right
-    newFBStr = fBStr.substr(1-realExp);
+    newFBStr = fBStr.substring(1-realExp);
   }
   if (newFBStr.length==0) // nothing i.e. 1.
     newFBStr = "0";
   
-  stepsStr += "1." + newFBStr;
-  stepsStr += " x 2<sup>" + realExp + "</sup>";
+  stepsStr += "<span style='color:purple;'>1.</span><span style='color:orange;'>" + newFBStr;
+  stepsStr += "</span> x 2<sup><span style='color:blue;'>" + realExp + "</span></sup>";
 
   // into three parts
   var biasedExpStr = fillTo((realExp+127).toString(2), "0", 8);
-  stepsStr += "<br/>->-> biased exp is: " + (realExp) + " + 127 = " + (realExp+127) + " -> " + biasedExpStr;
-  stepsStr += "<br/>->-> drop leading 1. of " + "1." + newFBStr + " -> fraction part: " + newFBStr;
-  stepsStr += "<br/><br/>-> together: sign-bit " + biasedExpStr + " " + newFBStr;
+  stepsStr += "<br/>->-> biased exp is: <span style='color:blue;'>" + (realExp) + "</span> + 127 = " + (realExp+127) + " -> <span style='color:blue;'>" + biasedExpStr + "</span>";
+  stepsStr += "<br/>->-> drop leading <span style='color:purple;'>1.</span> of " + "<span style='color:purple;'>1.</span><span style='color:orange;'>" + newFBStr + "</span> -> fraction part: <span style='color:orange;'>" + newFBStr + "</span>";
+  stepsStr += "<br/><br/>-> together: sign-bit <span style='color:blue;'>" + biasedExpStr + "</span> <span style='color:orange;'>" + newFBStr+"</span>";
   if (newFBStr.charAt(newFBStr.length-1) != '*')
-    stepsStr += "(add trailing 0s to reach 23 bits)";
+    stepsStr += "<span style='color:orange;'>(add trailing 0s to reach 23 bits)</span>";
 
   document.getElementById("p2Answer").innerHTML = "Answer: " + resultStr + "<br><pre>Given " + nStr + "<br>->" + stepsStr + "</pre>";
   document.getElementById("p2AnswerBtn").disabled = true; // turn off Answer button
