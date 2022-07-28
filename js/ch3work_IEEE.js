@@ -261,7 +261,8 @@ function p1ShowAnswer() {
   var x1 = ieeeStr.substring(0, 1);  // sign
   var x2 = ieeeStr.substring(1, 8+1);  // exponent
   var x3 = ieeeStr.substring(9);     // significand
-  stepsStr = " three parts: " + x1 + " <font color=blue>" + x2 + "</font> <span style='color:orange;'>" + x3 + "</span>";
+  //stepsStr = " three parts: " + x1 + " <font color=blue>" + x2 + "</font> <span style='color:orange;'>" + x3 + "</span>";
+  stepsStr = " three parts: " + x1 + " <span style='color:Blue;'>" + x2 + "</span>" + " <span style='color:Orange;'>" + x3 + "</span>";
 
   // sign
   stepsStr += "<br/>-> sign bit " + x1;
