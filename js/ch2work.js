@@ -79,7 +79,7 @@ function p1ShowAnswer() {
   document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + 
       "<br><pre>Given " + bStr + ", <br>" + steps1 + 
       "<br>(The rightmost bit/least significant bit/LSB is at position <span style='color:Orange;'>0</span>)<br>" + 
-      " -> the value is " + steps2 + 
+      " -> the value is " + steps2 + " = " + nStr +
       "<br> (The least significant bit/LSB has weight 2<sup><span style='color:Orange;'>0</span></sup>)</pre>";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
