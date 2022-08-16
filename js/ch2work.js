@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  7/5/2018
-// Last updated: 2/4/2022
+// Last updated: 8/16/2022
 // Copyright reserved
 
 //==================================
@@ -71,16 +71,16 @@ function p1ShowAnswer() {
         steps1 += ", ";
         steps2 += " + ";
       }
-      steps1 += "" + (bStr.length-1 - i);
-      steps2 += "2<sup>" + (bStr.length-1 - i) + "</sup>";
+      steps1 += "<span style='color:Orange;'>" + (bStr.length-1 - i) + "</span>";
+      steps2 += "2<sup><span style='color:Orange;'>" + (bStr.length-1 - i) + "</span></sup>";
     }
   }
 
   document.getElementById("p1Answer").innerHTML = "Answer: " + nStr + 
       "<br><pre>Given " + bStr + ", <br>" + steps1 + 
-      "<br>(The rightmost bit/least significant bit/LSB is at position 0)<br>" + 
+      "<br>(The rightmost bit/least significant bit/LSB is at position <span style='color:Orange;'>0</span>)<br>" + 
       " -> the value is " + steps2 + 
-      "<br> (The least significant bit/LSB has weight 2<sup>0</sup>)</pre>";
+      "<br> (The least significant bit/LSB has weight 2<sup><span style='color:Orange;'>0</span></sup>)</pre>";
   document.getElementById("p1AnswerBtn").disabled = true; // turn off Answer button
 } // end p1ShowAnswer
 
@@ -147,12 +147,12 @@ function p2ShowAnswer() {
     for (i=0; i<bStr.length; i++) {
       var ch = bStr.charAt(bStr.length-1 - i);
       var half = Math.floor(n / 2);
-      steps += "<br />" + n + " / 2 = " + half + ", remainder " + ch ;
+      steps += "<br />" + n + " / 2 = " + half + ", remainder <span style='color:Blue;'>" + ch + "</span>" ;
       n = half;
     }
   }
 
-  document.getElementById("p2Answer").innerHTML = "Answer: " + bStr + "<br><pre>" + steps + "--> MSB </pre>";
+  document.getElementById("p2Answer").innerHTML = "Answer: <span style='color:Blue;'>" + bStr + "</span><br><pre>" + steps + "--> MSB </pre>";
   document.getElementById("p2AnswerBtn").disabled = true; // turn off Answer button
 } // end p2ShowAnswer
 
@@ -214,7 +214,7 @@ function p3ShowAnswer() {
   var nStr = document.getElementById("p3Data").innerHTML;
   var bStr = (+nStr).toString(2); // binary
   if (bStr.length > 8) {
-    bStr = bStr.substr(0, 8); // chop off extra bits beyond 6 binary digits
+    bStr = bStr.substring(0, 8); // chop off extra bits beyond 6 binary digits
                                // 8 chars: 0. + 6 digits after .
   }
   var n = nStr;
@@ -230,7 +230,8 @@ function p3ShowAnswer() {
       var ch = 0;
       if (dbl >=1)
         ch = 1;
-      steps += "<br />" + n + " * 2 = " + dbl + ", int " + ch ;
+      var strDbl = dbl.toString(); 
+      steps += "<br />" + n + " * 2 = <span style='color:Blue;'>" + strDbl.substring(0, 1) + "</span>" + strDbl.substring(1) + ", int <span style='color:Blue;'>" + ch + "</span>" ;
 
       n = dbl;
       if (dbl >= 1)
@@ -240,6 +241,6 @@ function p3ShowAnswer() {
     }
   }
 
-  document.getElementById("p3Answer").innerHTML = "Answer: " + bStr + "<br><pre>" + steps + "--> LSB </pre>";
+  document.getElementById("p3Answer").innerHTML = "Answer: 0.<span style='color:Blue;'>" + bStr.substring(2) + "</span><br><pre>" + steps + "--> LSB </pre>";
   document.getElementById("p3AnswerBtn").disabled = true; // turn off Answer button
 } // end p3ShowAnswer
