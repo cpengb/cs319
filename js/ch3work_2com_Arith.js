@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  10/15/2019
-// Last updated: 10/20/2021
+// Last updated: 10/20/2022
 // Copyright reserved
 
 
@@ -393,7 +393,7 @@ function p2A_ShowAnswer() {
   var bStr2Com2 = document.getElementById("p2A_Data2").innerHTML; // given n2, 2's complement as string
 
   var bStrAddResultRaw = addTwoCompl(bStr2Com1, bStr2Com2, SIZE); // raw addition result
-  var bStrAddResult = bStrAddResultRaw.substr(1, SIZE);
+  var bStrAddResult = bStrAddResultRaw.substring(1, SIZE+1); // from index 1 to SIZE
   var carryBit = bStrAddResultRaw.charAt(0);
 
   var isCarryOut = (carryBit == '1'); // carry out of MSB?
@@ -410,29 +410,26 @@ function p2A_ShowAnswer() {
       "------------ <br>" + "=" ;
   if (isCarryOut) {
     stepsStr += "(1)" + bStrAddResult + "<br>";
+    stepsStr += "<br> -> (Evaluate the Addition result)<br> 1. There is a carry out of MSB, just drop it i.e. that (1). ";
   } else {
     stepsStr += "   " + bStrAddResult + "<br>";
+    stepsStr += "<br> -> (Evaluate the Addition result)<br> 1. No carry out of MSB.";
   }
-
+  stepsStr += "<br> 2. Now check the result " + bStrAddResult +" for overflow:";
   if (isOverflow) { // overflow, no need to discuss the result
-    stepsStr += "<br> -> (Addition) Overflow happened, as the operands have the same sign, but the result has a different sign.";
-    stepsStr += "<br> -> The result " + bStrAddResult + " is invalid. Should not be used.";
+    stepsStr += "<br> Overflow happened, as the operands have the same sign, but the result has a different sign.";
+    stepsStr += "<br> 3. (Final) The result " + bStrAddResult + " is invalid due to overflow. Should not be used.";
     stepsStr += " ( " +
         twoComToDec(bStr2Com1, SIZE) + " + " + twoComToDec(bStr2Com2, SIZE) +
         " ? " + twoComToDec(bStrAddResult, SIZE) + " )";
   } else { //no overflow
     if ( bStr2Com1.charAt(0) == bStr2Com2.charAt(0) ) { // result same sign as operands
-      stepsStr += "<br> -> (Addition) No overflow, as the result has the same sign as the operands.";
+      stepsStr += "<br> No overflow, as the result has the same sign as the operands.";
     } else { // different sign operands
-      stepsStr += "<br> -> (Addition) No overflow, as the operands have different signs.";
+      stepsStr += "<br> No overflow, as the operands have different signs.";
     }
 
-    if (isCarryOut) {
-      stepsStr += "<br>There is a carry out of MSB, just drop it.";
-    } else {
-      stepsStr += "<br>No carry out of MSB.";
-    }
-    stepsStr += "<br>The result is: " + bStrAddResult + " ( " +
+    stepsStr += "<br> 3. (Final) The result is: " + bStrAddResult + " ( " +
         twoComToDec(bStr2Com1, SIZE) + " + " + twoComToDec(bStr2Com2, SIZE) +
         " = " + twoComToDec(bStrAddResult, SIZE) + " )";
   }
@@ -547,7 +544,7 @@ function p3A_ShowAnswer() {
   var bStr2Com2 = document.getElementById("p3A_Data2").innerHTML; // given n2, 2's complement as string
 
   var bStrSubResultRaw = subTwoCompl(bStr2Com1, bStr2Com2, SIZE); // raw subtraction result
-  var bStrSubResult = bStrSubResultRaw.substr(1, SIZE);
+  var bStrSubResult = bStrSubResultRaw.substring(1, SIZE+1);
   var carryBit = bStrSubResultRaw.charAt(0);
 
   var isCarryOut = (carryBit == '1'); // carry out of MSB?
@@ -568,29 +565,27 @@ function p3A_ShowAnswer() {
       "------------ <br>" + "=";
   if (isCarryOut) {
     stepsStr += "(1)" + bStrSubResult + "<br>";
+    stepsStr += "<br> -> (Evaluate the result)<br> 1. There is a carry out of MSB, just drop it i.e. that (1).";
   } else {
     stepsStr += "   " + bStrSubResult + "<br>";
+    stepsStr += "<br> -> (Evaluate the result)<br> 1. No carry out of MSB.";
   }
 
+  stepsStr += "<br> 2. Now check the result " + bStrSubResult + " for overflow:";
   if (isOverflow) { // overflow, no need to discuss the result
-    stepsStr += "<br> -> (Subtraction) Overflow happened, as the operands of subtraction have different signs <br>(operands of addition have the same sign), and the result has a different sign from<br> the 1st operand, minuend.";
-    stepsStr += "<br> -> The result " + bStrSubResult + " is invalid. Should not be used.";
+    stepsStr += "<br> Overflow happened, as the operands of subtraction have different signs <br>(operands of addition have the same sign), and the result has a different sign from<br> the 1st operand, minuend.";
+    stepsStr += "<br> 3. (Final) The result " + bStrSubResult + " is invalid. Should not be used.";
     stepsStr += " ( " +
         twoComToDec(bStr2Com1, SIZE) + " - " + twoComToDec(bStr2Com2, SIZE) +
         " ? " + twoComToDec(bStrSubResult, SIZE) + " )";
   } else { //no overflow
     if ( bStr2Com1.charAt(0) != bStr2Com2.charAt(0) ) { // result same sign as 1st operand, minuend
-      stepsStr += "<br> -> (Subtraction) No overflow, as [the operands of subtraction have different signs <br>(operands of addition have the same sign),] the result has the same sign as <br>the first operand.";
+      stepsStr += "<br> No overflow, as [the operands of subtraction have different signs <br>(operands of addition have the same sign),] the result has the same sign as <br>the first operand.";
     } else { // subtraction operands have same sign (addition operands have different signs)
-      stepsStr += "<br> -> (Subtraction) No overflow, as the operands of subtraction have the same sign <br>(operands of addition have different signs).";
+      stepsStr += "<br> No overflow, as the operands of subtraction have the same sign <br>(operands of addition have different signs).";
     }
 
-    if (isCarryOut) {
-      stepsStr += "<br>There is a carry out of MSB, just drop it.";
-    } else {
-      stepsStr += "<br>No carry out of MSB.";
-    }
-    stepsStr += "<br> -> The result is: " + bStrSubResult + " ( " +
+    stepsStr += "<br> 3. (Final) The result is: " + bStrSubResult + " ( " +
         twoComToDec(bStr2Com1, SIZE) + " - " + twoComToDec(bStr2Com2, SIZE) +
         " = " + twoComToDec(bStrSubResult, SIZE) + " )";
   }
