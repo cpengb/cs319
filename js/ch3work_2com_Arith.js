@@ -3,7 +3,7 @@
 
 // Author: Bin Peng
 // Created:  10/15/2019
-// Last updated: 10/20/2022
+// Last updated: 12/7/2022
 // Copyright reserved
 
 
@@ -346,7 +346,7 @@ function p2A_CheckResult() {
 	  var bStr2Com2 = document.getElementById("p2A_Data2").innerHTML; // given n2, 2's complement as string
 
     var bStrAddResultRaw = addTwoCompl(bStr2Com1, bStr2Com2, SIZE); // raw addition result
-    var bStrAddResult = bStrAddResultRaw.substr(1, SIZE);
+    var bStrAddResult = bStrAddResultRaw.substring(1, SIZE+1);
     var carryBit = bStrAddResultRaw.charAt(0);
 
     var isCarryOut = (carryBit == '1'); // carry out of MSB?
@@ -361,20 +361,21 @@ function p2A_CheckResult() {
     var isOverflowResultCorrect = isOverflow && overflowInput[0].checked ||
       !isOverflow && overflowInput[1].checked;
 
-  	if (x == bStrAddResult) {
-	    // if overflow, it's okay to just check overflow result
-      if (isOverflow && isOverflowResultCorrect ||
-          isCarryResultCorrect && isOverflowResultCorrect) {
+  	if (x == bStrAddResult) { // raw addition result is correct
+	    if (isCarryResultCorrect && isOverflowResultCorrect) {
 	      text = "Correct!";
 	    }
 	    else { // wrong overflow/carry input
-	      text = "Correct addition result, but ";
-	      if (!isOverflowResultCorrect) {
-	        text += "incorrect overflow result.";
+	      text = "Correct addition result ";
+        if (!isCarryResultCorrect && isOverflowResultCorrect) {
+		      text += "and correct overflow result, but incorrect carry-out-of-MSB result.";
 	      }
-	      if (!isCarryResultCorrect) {
-		      text += "incorrect carry-out-of-MSB result.";
-	      }
+        else if (isCarryResultCorrect && !isOverflowResultCorrect) {
+          text += "and correct carry-out-of-MSB result, but incorrect overflow result.";
+        }
+	      else {
+          text += "but incorrect carry-out-of-MSB and incorrect overflow results.";
+        }
 	    }
     } else {
 	    text = "Incorrect addition result. Try again.";
@@ -498,7 +499,7 @@ function p3A_CheckResult() {
 	  var bStr2Com2 = document.getElementById("p3A_Data2").innerHTML; // given n2, 2's complement as string
 
     var bStrSubResultRaw = subTwoCompl(bStr2Com1, bStr2Com2, SIZE); // raw subtraction result
-    var bStrSubResult = bStrSubResultRaw.substr(1, SIZE);
+    var bStrSubResult = bStrSubResultRaw.substring(1, SIZE+1);
     var carryBit = bStrSubResultRaw.charAt(0);
 
     var isCarryOut = (carryBit == '1'); // carry out of MSB?
@@ -513,19 +514,20 @@ function p3A_CheckResult() {
     var isOverflowResultCorrect = isOverflow && overflowInput[0].checked ||
       !isOverflow && overflowInput[1].checked;
 
-    if (x == bStrSubResult) {
-      // if overflow, it's okay to just check overflow result
-      if (isOverflow && isOverflowResultCorrect ||
-          isCarryResultCorrect && isOverflowResultCorrect) {
+    if (x == bStrSubResult) { // raw sub result is correct
+      if (isCarryResultCorrect && isOverflowResultCorrect) {
 	      text = "Correct!";
 	    } else { // wrong overflow/carry input
-	      text = "Correct subtraction result, but ";
-	      if (overflowInput != isOverflow) {
-	        text += "incorrect overflow result.";
+        text = "Correct subtraction result ";
+        if (!isCarryResultCorrect && isOverflowResultCorrect) {
+		      text += "and correct overflow result, but incorrect carry-out-of-MSB result.";
 	      }
-	      if (carryInput != isCarryOut) {
-	        text += "incorrect carry-out-of-MSB result.";
-	      }
+        else if (isCarryResultCorrect && !isOverflowResultCorrect) {
+          text += "and correct carry-out-of-MSB result, but incorrect overflow result.";
+        }
+	      else {
+          text += "but incorrect carry-out-of-MSB and incorrect overflow results.";
+        }
 	    }
     } else {
       text = "Incorrect subtraction result. Try again.";
